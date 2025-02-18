@@ -54,6 +54,10 @@
     cursor: pointer;
 }
 
+.comment-count-individual-article a {
+    color: #213547;
+}
+
 .article-body {
     border-top: 2px solid #edeba0;
     width: 80%;
