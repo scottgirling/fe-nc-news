@@ -1,0 +1,12 @@
+.loading {
+    height: 1000px;
+    width: 800px;
+}
+
+.loading p {
+    font-size: 4rem;
+}
+
+.loading i {
+    font-size: 2rem;
+}
