@@ -1,17 +1,13 @@
 import { useState, useEffect } from "react";
-import { useParams, useSearchParams, Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { fetchArticleById } from "../utils/api";
+import { ArticleComments } from "./ArticleComments";
 import '../SingleArticle.css';
 
 export const SingleArticle = () => {
     const { article_id } = useParams();
-    const [searchParams, setSearchParams] = useSearchParams();
     const [article, setArticle] = useState({});
     const [isLoading, setIsLoading] = useState(false);
-
-    const pageQuery = searchParams.get("p");
-
-    console.log(pageQuery)
 
     useEffect(() => {
         setIsLoading(true);
@@ -46,10 +42,11 @@ export const SingleArticle = () => {
                     </div>
                     <div>
                         <p className="related-articles">View related {article.topic} articles <i className="fa-solid fa-angle-right"></i></p>
-                        <p className="comment-count-individual-article"><i className="fa-regular fa-comment"></i> {article.comment_count}</p>
+                        <p className="comment-count-individual-article"><a href="#comments"><i className="fa-regular fa-comment"></i> {article.comment_count}</a></p>
                     </div>
                 </div>
                 <p className="article-body">{article.body}</p>
+                <ArticleComments article_id={article_id} />
             </main>
             <Link to="/">
                 <button className="back-to-articles-button">

@@ -22,5 +22,12 @@ export const fetchTopics = () => {
     return newsApi.get("topics")
     .then((response) => {
         return response.data.topics;
-    })
+    });
+}
+
+export const fetchCommentsByArticleId = (article_id) => {
+    return newsApi.get(`articles/${article_id}/comments`)
+    .then((response) => {
+        return response.data.comments;
+    });
 }
