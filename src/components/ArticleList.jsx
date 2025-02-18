@@ -1,7 +1,9 @@
+import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Loading } from "./Loading";
 import { fetchArticles } from "../utils/api";
 import '../ArticleList.css'
+import { SingleArticle } from "./SingleArticle";
 
 export const ArticleList = () => {
     const [articles, setArticles] = useState([]);
@@ -13,8 +15,14 @@ export const ArticleList = () => {
         setIsLoading(true);
         fetchArticles(page)
         .then((returnedArticles) => {
-            setArticles(returnedArticles);
-            setIsLoading(false)
+            if (!returnedArticles.length) {
+                setPage(1);
+                fetchArticles(page);
+                setIsLoading(false);
+            } else {
+                setArticles(returnedArticles);
+                setIsLoading(false);
+            }
         });
     }, [page]);
 
@@ -23,18 +31,33 @@ export const ArticleList = () => {
             {isLoading ? <Loading />
             :
             <>
-            <h2 className="latest-news">Latest Articles:</h2>
+            <div className="top-page">
+                <h2 className="latest-news">Latest Articles:</h2>
+                <div className="pages">
+                    <button type="submit" onClick={() => {
+                        {page > 1 ? setPage(page - 1) : null};
+                    }}><i class="fa-solid fa-angle-left"></i> Previous
+                    </button>
+                    <p>{page}</p>
+                    <button type="submit" onClick={() => {
+                        setPage(page + 1);
+                    }}>Next <i className="fa-solid fa-angle-right"></i>
+                    </button>
+                </div>
+            </div>
             <main className="landing-page">
                 <ul>
                     {articles.map((article) => {
                         return (
                             <li className="article-card" key={article.article_id}>
-                                <img className="article-img" src={article.article_img_url}></img>
-                                <h3 className="article-title">{article.title}</h3>
-                                <div className="article-details">
-                                    <p className="posted-by">Posted by: {article.author}</p>
-                                    <p className="comment-count"><i className="fa-regular fa-comment"></i> {article.comment_count}</p>
-                                </div>
+                                <Link to={`/articles/${article.article_id}`} >
+                                    <img className="article-img" src={article.article_img_url}></img>
+                                    <h3 className="article-title">{article.title}</h3>
+                                    <div className="article-details">
+                                        <p className="posted-by">Posted by: {article.author}</p>
+                                        <p className="comment-count"><i className="fa-regular fa-comment"></i> {article.comment_count}</p>
+                                    </div>
+                                </Link>
                             </li>
                         )
                     })}
