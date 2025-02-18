@@ -1,0 +1,64 @@
+.back-to-articles-button {
+    font-size: .75rem;
+    display: block;
+    margin-top: 1rem;
+    margin-left: 3rem;
+}
+
+.article-title-individual-article {
+    font-size: 3rem;
+}
+
+.article-info {
+    display: flex;
+    justify-content: space-between;
+}
+
+.posted-by-individual-article {
+    text-align: left;
+    margin-left: 4rem;
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+.author {
+    width: max-content;
+    margin-top: 0;
+    padding-bottom: 1rem;
+    text-align: left;
+    margin-left: 4rem;
+    border-bottom: 1px solid black;
+}
+
+.date-posted {
+    text-align: left;
+    margin-left: 4rem;
+    opacity: 70%;
+}
+
+.related-articles {
+    margin-right: 4rem;
+}
+
+.related-articles:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.comment-count-individual-article {
+    margin-right: 4rem;
+    text-align: right;
+}
+
+.comment-count-individual-article:hover {
+    cursor: pointer;
+}
+
+.article-body {
+    border-top: 2px solid #edeba0;
+    width: 80%;
+    margin: auto;
+    padding: 2rem;
+    text-align: left;
+    font-size: 1.5rem;
+}

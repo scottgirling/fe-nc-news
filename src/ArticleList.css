@@ -2,10 +2,39 @@
     display: flex;
 }
 
+.top-page {
+    display: flex;
+    justify-content: space-between;
+}
+
 .latest-news {
     margin: 1rem 0 0 5rem;
     font-size: 1.5rem;
     text-align: left;
+}
+
+.pages {
+    display: flex;
+    margin-right: 5rem;
+}
+
+.pages p {
+    border: 1px solid #213547;
+    margin: 0;
+    padding: 1rem;
+    color: black;
+}
+
+.pages button {
+    background-color: #9db4c0;
+    border: 1px solid #213547;
+    border-radius: 0;
+    padding: 0 1rem;
+}
+
+.pages button:hover {
+    cursor: pointer;
+    text-decoration: underline;
 }
 
 ul {
@@ -45,11 +74,13 @@ ul {
     height: 3rem;
     align-items: center;
     margin-bottom: 0;
+    color: #213547;
 }
 
 .article-details {
     display: flex;
     justify-content: space-around;
+    color: #213547;
 }
 
 .posted-by, .comment-count {

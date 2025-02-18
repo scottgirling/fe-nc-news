@@ -6,6 +6,7 @@ header {
 .title {
     margin: 1rem 4rem;
     font-size: 3rem;
+    color: #213547;
 }
 
 .user-login {

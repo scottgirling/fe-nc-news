@@ -11,6 +11,13 @@ export const fetchArticles = (page) => {
     });
 }
 
+export const fetchArticleById = (article_id) => {
+    return newsApi.get(`articles/${article_id}`)
+    .then((response) => {
+        return response.data.article;
+    })
+}
+
 export const fetchTopics = () => {
     return newsApi.get("topics")
     .then((response) => {
