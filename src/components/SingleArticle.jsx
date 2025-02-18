@@ -8,6 +8,7 @@ export const SingleArticle = () => {
     const { article_id } = useParams();
     const [article, setArticle] = useState({});
     const [isLoading, setIsLoading] = useState(false);
+    const [hasVoted, setHasVoted] = useState(false);
 
     useEffect(() => {
         setIsLoading(true);
@@ -43,6 +44,13 @@ export const SingleArticle = () => {
                     <div>
                         <p className="related-articles">View related {article.topic} articles <i className="fa-solid fa-angle-right"></i></p>
                         <p className="comment-count-individual-article"><a href="#comments"><i className="fa-regular fa-comment"></i> {article.comment_count}</a></p>
+                        <div className="article-vote">
+                                <button onClick={() => {
+                                    setHasVoted(!hasVoted)
+                                    // patch request to update DB
+                                    console.log(hasVoted, "<--- voted?")
+                                }}><i className="fa-regular fa-heart"></i> {article.votes}</button>
+                            </div>
                     </div>
                 </div>
                 <p className="article-body">{article.body}</p>
