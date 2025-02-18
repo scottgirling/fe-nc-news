@@ -1,21 +1,22 @@
 import { useState, useEffect } from "react";
+import { Loading } from "./Loading";
 import { fetchArticles } from "../utils/api";
 import '../ArticleList.css'
-import { Loading } from "./Loading";
 
 export const ArticleList = () => {
     const [articles, setArticles] = useState([]);
+    const [page, setPage] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(false);
 
     useEffect(() => {
         setIsLoading(true);
-        fetchArticles()
+        fetchArticles(page)
         .then((returnedArticles) => {
             setArticles(returnedArticles);
             setIsLoading(false)
         });
-    }, []);
+    }, [page]);
 
     return (
         <>
@@ -39,6 +40,10 @@ export const ArticleList = () => {
                     })}
                 </ul>
             </main>
+            <button type="submit" onClick={() => {
+                setPage(page + 1);
+            }}>View More Articles <i className="fa-solid fa-angle-right"></i>
+            </button>
             </>
             }
         </>

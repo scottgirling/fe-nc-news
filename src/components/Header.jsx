@@ -1,5 +1,10 @@
+import '../Header.css';
+
 export const Header = () => {
     return (
-        <h1>NC News</h1>
+        <header>
+            <h1 className="title">Northcoders News</h1>
+            <button className="user-login"><i className="fa-solid fa-user"></i></button>
+        </header>
     );
 }
