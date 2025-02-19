@@ -31,3 +31,21 @@ export const fetchCommentsByArticleId = (article_id) => {
         return response.data.comments;
     });
 }
+
+export const updateArticleVotesIncrement = (article_id) => {
+    return newsApi.patch(`articles/${article_id}`, { 
+        inc_votes: 1
+    })
+    .then((response) => {
+        return response.data.updatedArticle;
+    })
+}
+
+export const updateArticleVotesDecrement = (article_id) => {
+    return newsApi.patch(`articles/${article_id}`, { 
+        inc_votes: -1
+    })
+    .then((response) => {
+        return response.data.updatedArticle;
+    })
+}

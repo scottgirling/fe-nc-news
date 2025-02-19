@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { fetchArticleById } from "../utils/api";
+import { fetchArticleById, updateArticleVotesIncrement, updateArticleVotesDecrement } from "../utils/api";
 import { ArticleComments } from "./ArticleComments";
 import '../SingleArticle.css';
 
@@ -9,15 +9,54 @@ export const SingleArticle = () => {
     const [article, setArticle] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const [hasVoted, setHasVoted] = useState(false);
+    const [voteCount, setVoteCount]= useState(0);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         setIsLoading(true);
         fetchArticleById(article_id)
         .then((returnedArticle) => {
             setArticle(returnedArticle);
+            setVoteCount(returnedArticle.votes)
             setIsLoading(false);
         });
     }, []);
+    
+    const handleVoteIncrement = () => {
+        setVoteCount((currentVoteCount) => {
+            return currentVoteCount + 1;
+        });
+        updateArticleVotesIncrement(article_id)
+        .then(({ votes }) => {
+            setVoteCount(votes);
+            setHasVoted(true);
+            setError(null);
+        })
+        .catch(() => {
+            setVoteCount((currentVoteCount) => {
+                return currentVoteCount - 1;
+            })
+            setError("Your vote was not successful. Please try again.");
+        });
+    }
+
+    const handleVoteDecrement = () => {
+        setVoteCount((currentVoteCount) => {
+            return currentVoteCount - 1;
+        });
+        updateArticleVotesDecrement(article_id)
+        .then(({ votes }) => {
+            setVoteCount(votes);
+            setHasVoted(false);
+            setError(null);
+        })
+        .catch(() => {
+            setVoteCount((currentVoteCount) => {
+                return currentVoteCount + 1;
+            })
+            setError("Your vote was not successful. Please try again.");
+        });
+    }
 
     if (isLoading) {
         return (
@@ -45,12 +84,16 @@ export const SingleArticle = () => {
                         <p className="related-articles">View related {article.topic} articles <i className="fa-solid fa-angle-right"></i></p>
                         <p className="comment-count-individual-article"><a href="#comments"><i className="fa-regular fa-comment"></i> {article.comment_count}</a></p>
                         <div className="article-vote">
+                            {hasVoted ? <button onClick={() => {
+                                return handleVoteDecrement();
+                            }}><i className="fa-solid fa-heart"></i> {voteCount}</button>
+                            :
                                 <button onClick={() => {
-                                    setHasVoted(!hasVoted)
-                                    // patch request to update DB
-                                    console.log(hasVoted, "<--- voted?")
-                                }}><i className="fa-regular fa-heart"></i> {article.votes}</button>
-                            </div>
+                                    return handleVoteIncrement()
+                                }}><i className="fa-regular fa-heart"></i> {voteCount}</button>
+                            }
+                        </div>
+                            {error ? <p class="vote-error">{error}</p> : null}
                     </div>
                 </div>
                 <p className="article-body">{article.body}</p>
