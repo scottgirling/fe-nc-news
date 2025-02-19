@@ -66,11 +66,13 @@ export const SingleArticle = () => {
 
     return (
         <>
-            <Link to="/">
-                <button className="back-to-articles-button">
-                    <i className="fa-solid fa-chevron-left"></i> Back to Articles
-                </button>
-            </Link>
+            <div id="link-width">
+                <Link to="/">
+                    <button className="back-to-articles-button">
+                        <i className="fa-solid fa-chevron-left"></i> Back to Articles
+                    </button>
+                </Link>
+            </div>
             <main>
                 <h2 className="article-title-individual-article">{article.title}</h2>
                 <img src={article.article_img_url}></img>
@@ -99,11 +101,13 @@ export const SingleArticle = () => {
                 <p className="article-body">{article.body}</p>
                 <ArticleComments article_id={article_id} />
             </main>
-            <Link to="/">
-                <button className="back-to-articles-button">
-                    <i className="fa-solid fa-chevron-left"></i> Back to Articles
-                </button>
-            </Link>
+            <div id="link-width">
+                <Link to="/">
+                    <button className="back-to-articles-button">
+                        <i className="fa-solid fa-chevron-left"></i> Back to Articles
+                    </button>
+                </Link>
+            </div>
         </>
     );
 }

@@ -1,9 +1,8 @@
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Loading } from "./Loading";
 import { fetchArticles } from "../utils/api";
 import '../ArticleList.css'
-import { SingleArticle } from "./SingleArticle";
 
 export const ArticleList = () => {
     const [articles, setArticles] = useState([]);
@@ -18,7 +17,6 @@ export const ArticleList = () => {
             if (!returnedArticles.length) {
                 setPage(1);
                 fetchArticles(page);
-                setIsLoading(false);
             } else {
                 setArticles(returnedArticles);
                 setIsLoading(false);
@@ -36,7 +34,7 @@ export const ArticleList = () => {
                 <div className="pages">
                     <button type="submit" onClick={() => {
                         {page > 1 ? setPage(page - 1) : null};
-                    }}><i class="fa-solid fa-angle-left"></i> Previous
+                    }}><i className="fa-solid fa-angle-left"></i> Previous
                     </button>
                     <p>{page}</p>
                     <button type="submit" onClick={() => {

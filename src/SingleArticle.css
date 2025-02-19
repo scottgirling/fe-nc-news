@@ -5,6 +5,10 @@
     margin-left: 3rem;
 }
 
+#link-width {
+   width: max-content;
+}
+
 .article-title-individual-article {
     font-size: 3rem;
 }

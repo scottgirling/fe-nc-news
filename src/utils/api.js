@@ -47,5 +47,12 @@ export const updateArticleVotesDecrement = (article_id) => {
     })
     .then((response) => {
         return response.data.updatedArticle;
-    })
+    });
+}
+
+export const addCommentByArticleId = (article_id, commentDetails) => {
+    return newsApi.post(`articles/${article_id}/comments`, commentDetails)
+    .then((response) => {
+        return response.data.newComment;
+    });
 }
