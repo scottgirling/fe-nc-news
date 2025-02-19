@@ -50,7 +50,7 @@ export const ArticleList = () => {
                     {articles.map((article) => {
                         return (
                             <li className="article-card" key={article.article_id}>
-                                <Link to={`/articles/${article.article_id}`} >
+                                <Link to={`/articles/${article.article_id}`}>
                                     <img className="article-img" src={article.article_img_url}></img>
                                     <h3 className="article-title">{article.title}</h3>
                                     <div className="article-details">

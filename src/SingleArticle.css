@@ -38,6 +38,7 @@
 
 .related-articles {
     margin-right: 4rem;
+    text-align: right;
 }
 
 .related-articles:hover {
@@ -47,6 +48,7 @@
 
 .comment-count-individual-article {
     margin-right: 4rem;
+    margin-bottom: 0;
     text-align: right;
 }
 
@@ -65,4 +67,25 @@
     padding: 2rem;
     text-align: left;
     font-size: 1.5rem;
+}
+
+.article-vote {
+    display: flex;
+    justify-content: right;
+    margin-right: 4rem;
+}
+
+.article-vote button {
+    background-color: #9db4c0;
+    color: #213547;
+    margin: 1rem .5rem;
+    margin-right: 0;
+    text-align: right;
+    padding: 0;
+    border: 0;
+}
+
+.vote-error {
+    margin-right: 4rem;
+    margin-top: 0rem;
 }
