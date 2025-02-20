@@ -1,28 +1,37 @@
-import { Link } from "react-router-dom";
+import { Link, useParams, useSearchParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Loading } from "./Loading";
 import { fetchArticles } from "../utils/api";
 import '../ArticleList.css'
 
 export const ArticleList = () => {
+    const { topic } = useParams();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const pageQuery = searchParams.get("p");
+
     const [articles, setArticles] = useState([]);
-    const [page, setPage] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(false);
 
+    const setPage = (pageNumber) => {
+        const newParams = new URLSearchParams(searchParams);
+        newParams.set("p", Number(pageNumber));
+        setSearchParams(newParams);
+    }
+
     useEffect(() => {
         setIsLoading(true);
-        fetchArticles(page)
+        fetchArticles(topic, pageQuery)
         .then((returnedArticles) => {
             if (!returnedArticles.length) {
                 setPage(1);
-                fetchArticles(page);
+                fetchArticles(topic, pageQuery);
             } else {
                 setArticles(returnedArticles);
                 setIsLoading(false);
             }
         });
-    }, [page]);
+    }, [topic, pageQuery]);
 
     return (
         <>
@@ -33,17 +42,22 @@ export const ArticleList = () => {
                 <h2 className="latest-news">Latest Articles:</h2>
                 <div className="pages">
                     <button type="submit" onClick={() => {
-                        {page > 1 ? setPage(page - 1) : null};
+                        {pageQuery > 1 ? setPage(Number(pageQuery) - 1) : null};
                     }}><i className="fa-solid fa-angle-left"></i> Previous
                     </button>
-                    <p>{page}</p>
+                    <p>{pageQuery || 1}</p>
                     <button type="submit" onClick={() => {
-                        setPage(page + 1);
-                    }}>Next <i className="fa-solid fa-angle-right"></i>
+                            {!pageQuery ? (
+                                setPage(Number(pageQuery) + 2) 
+                            ) : (
+                                setPage(Number(pageQuery) + 1)
+                            )};
+                        }
+                    }>Next <i className="fa-solid fa-angle-right"></i>
                     </button>
                 </div>
             </div>
-            <main className="landing-page">
+            <main className="landing-p">
                 <ul>
                     {articles.map((article) => {
                         return (
@@ -62,7 +76,7 @@ export const ArticleList = () => {
                 </ul>
             </main>
             <button type="submit" onClick={() => {
-                setPage(page + 1);
+                setPage(Number(pageQuery) + 1);
             }}>View More Articles <i className="fa-solid fa-angle-right"></i>
             </button>
             </>

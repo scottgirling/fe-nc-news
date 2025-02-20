@@ -17,6 +17,7 @@ function App() {
       <Routes>
         <Route path="/" element={<ArticleList/>} />
         <Route path="/articles/:article_id" element={<SingleArticle />} />
+        <Route path="/search/:topic" element={<ArticleList />} />
         <Route path="/login" element={<UserLoginForm/>} />
       </Routes>
     </UserAccountProvider>
