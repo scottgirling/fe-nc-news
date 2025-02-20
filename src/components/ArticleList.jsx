@@ -8,10 +8,14 @@ export const ArticleList = () => {
     const { topic } = useParams();
     const [searchParams, setSearchParams] = useSearchParams();
     const pageQuery = searchParams.get("p");
+    const sortByQuery = searchParams.get("sort_by");
+    const orderQuery = searchParams.get("order");
 
     const [articles, setArticles] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(false);
+
+    console.log(sortByQuery, "<--- sortByQuery")
 
     const setPage = (pageNumber) => {
         const newParams = new URLSearchParams(searchParams);
@@ -19,9 +23,22 @@ export const ArticleList = () => {
         setSearchParams(newParams);
     }
 
+    const setSortBy = (sort_by) => {
+        const newParams = new URLSearchParams(searchParams);
+        newParams.set("sort_by", sort_by)
+        setSearchParams(newParams);
+    }
+    console.log(sortByQuery, "<--- sortbyquery")
+
+    const setOrder = (order) => {
+        const newParams = new URLSearchParams(searchParams);
+        newParams.set("order", order)
+        setSearchParams(newParams);
+    }
+    
     useEffect(() => {
         setIsLoading(true);
-        fetchArticles(topic, pageQuery)
+        fetchArticles(topic, pageQuery, sortByQuery)
         .then((returnedArticles) => {
             if (!returnedArticles.length) {
                 setPage(1);
@@ -31,7 +48,11 @@ export const ArticleList = () => {
                 setIsLoading(false);
             }
         });
-    }, [topic, pageQuery]);
+    }, [topic, pageQuery, sortByQuery, orderQuery]);
+    
+    const handleChange = (event) => {
+        console.log(event.target.value, "<--- event.target.value");
+    }
 
     return (
         <>
@@ -57,7 +78,45 @@ export const ArticleList = () => {
                     </button>
                 </div>
             </div>
-            <main className="landing-p">
+            <div>
+                <p>Sorting goes here</p>
+                <form onSubmit={() => {
+                    setSortBy(sort_by)
+                    setOrder(order)
+                }}>
+                    <label htmlFor="sort_by">Sort by: </label>
+                    <select
+                        onChange={(event) => handleChange(event)}
+                        name="sort_by"
+                        id="sort_by"
+                        defaultValue="none"
+                    >
+                        <option value="none" disabled hidden>
+                            
+                        </option>
+                        <option value="created_at">Date</option>
+                        <option value="comment_count">Comments</option>
+                        <option value="votes">Votes</option>
+                    </select>
+                    <br />
+                    <label htmlFor="order">Order: </label>
+                    <select
+                        onChange={(event) => handleChange(event)}
+                        name="order"
+                        id="order"
+                        defaultValue="none"
+                    >
+                        <option value="none" disabled hidden>
+
+                        </option>
+                        <option value="asc">Ascending</option>
+                        <option value="desc">Descending</option>
+                    </select>
+                    <br />
+                    <input type="submit"></input>
+                </form>
+            </div>
+            <main className="landing-page">
                 <ul>
                     {articles.map((article) => {
                         return (
