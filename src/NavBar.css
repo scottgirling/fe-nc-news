@@ -10,11 +10,13 @@ nav {
 .nav-topic {
     margin: .5rem 2rem;
     padding: .5rem 1rem;
+    color: #213547;
 }
 
 .nav-topic:hover {
     text-decoration: underline;
     cursor: pointer;
+    color: #213547;
 }
 
 .bold {

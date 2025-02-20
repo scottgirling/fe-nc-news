@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { fetchTopics } from '../utils/api';
 import '../NavBar.css'
@@ -23,12 +24,11 @@ export const NavBar = () => {
             <>
                 {topics.map((topic) => {
                     return (
-                        <li className="nav-topic" key={topic.slug}>
-                                {topic.slug[0].toUpperCase() + topic.slug.slice(1)}
-                            </li>
-                        );
-                    })
-                }
+                        <Link to={`/search/${topic.slug}?p=1`} className="nav-topic" key={topic.slug}>
+                            {topic.slug[0].toUpperCase() + topic.slug.slice(1)}
+                        </Link>
+                    );
+                })}
             </>
             }
         </nav>
