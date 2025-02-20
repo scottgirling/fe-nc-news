@@ -56,3 +56,14 @@ export const addCommentByArticleId = (article_id, commentDetails) => {
         return response.data.newComment;
     });
 }
+
+export const fetchUsers = () => {
+    return newsApi.get("users")
+    .then((response) => {
+        return response.data.users;
+    })
+}
+
+export const deleteCommentByCommentId = (comment_id) => {
+    return newsApi.delete(`comments/${comment_id}`);
+}

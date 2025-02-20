@@ -105,3 +105,16 @@
     border-radius: 5%;
     padding: .5rem 1rem;
 }
+
+.delete-comment-button, .confirm-delete-button {
+    margin-left: .5rem;
+    margin-bottom: .5rem;
+    display: block;
+    font-size: .75rem;
+}
+
+.safety-message {
+    margin-left: .5rem;
+    text-align: left;
+    font-weight: 500;
+}

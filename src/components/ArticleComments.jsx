@@ -1,8 +1,10 @@
-import { useState, useEffect } from "react"
-import { addCommentByArticleId, fetchCommentsByArticleId } from "../utils/api";
+import { useState, useEffect, useContext } from "react"
+import { addCommentByArticleId, fetchCommentsByArticleId, deleteCommentByCommentId } from "../utils/api";
 import '../ArticleComments.css'
+import { UserAccount } from "../contexts/UserAccount";
 
 export const ArticleComments = ({ article_id }) => {
+    const { loggedInUser } = useContext(UserAccount);
     const [comments, setComments] = useState([]);
     const [commentBox, setCommentBox] = useState(false);
     const [commentDetails] = useState({
@@ -10,10 +12,11 @@ export const ArticleComments = ({ article_id }) => {
         body: ""
     });
     const [newCommentIsLoading, setNewCommentIsLoading] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+    const [selectedCommentId, setSelectedCommentId] = useState(null);
+    const [commentIsDeleting, setCommentIsDeleting] = useState(false);
 
     useEffect(() => {
-        setIsLoading(true);
         fetchCommentsByArticleId(article_id)
         .then((returnedComments) => {
             setComments(returnedComments);
@@ -31,9 +34,8 @@ export const ArticleComments = ({ article_id }) => {
                 commentDetails[key] = event.target.value;
             }
         }
-        console.log(commentDetails, "<--- commentDetails")
     }
-
+    
     const handleSubmitComment = (event) => {
         setNewCommentIsLoading(true);
         event.preventDefault();
@@ -41,6 +43,20 @@ export const ArticleComments = ({ article_id }) => {
         .then(() => {
             setCommentBox(!commentBox);
             setNewCommentIsLoading(false);
+        });
+    }
+
+    const handleClick = (comment) => {
+        setSelectedCommentId(comment.comment_id)
+    }
+
+
+    const handleDelete = () => {
+        setCommentIsDeleting(true);
+        deleteCommentByCommentId(selectedCommentId)
+        .then(() => {
+            alert("Successfuly deleted comment");
+            setCommentIsDeleting(false);
         });
     }
 
@@ -58,16 +74,19 @@ export const ArticleComments = ({ article_id }) => {
             {newCommentIsLoading ? <p>Your comment is being uploaded...</p>
             : 
             <>
-                {commentBox ? 
-                    <>
+                {isLoading ? (
+                    <p>Loading comments...</p>
+                    ) : (
+                    commentBox ? 
+                        <>
                         <form onSubmit={(event) => handleSubmitComment(event)}>
                             <label htmlFor="username">Username: </label>
-                                <select
+                            <select
                                 onBlur={(event) => handleCommentBody(event)}
                                 name="username"
                                 id="username"
                                 defaultValue="none"
-                                >
+                            >
                                 <option value="none" disabled hidden>
                                 Select a username
                                 </option>
@@ -88,14 +107,14 @@ export const ArticleComments = ({ article_id }) => {
                                 required
                                 onBlur={(event) => handleCommentBody(event)}
                                 >
-                                </input>
+                            </input>
                             <br />
                             <input className="comment-submit-button" type="submit"></input>
                         </form>
-                    </>
-                    :
-                    <ul>
-                        {comments.map((comment) => {
+                        </>
+                        :
+                        <ul>
+                            {comments.map((comment) => {
                             return (
                                 <li className="comment-card" key={comment.comment_id}>
                                     <div className="comment-details">
@@ -109,12 +128,40 @@ export const ArticleComments = ({ article_id }) => {
                                         <p className="comment-votes">{comment.votes}</p>
                                         <p><i className="fa-solid fa-thumbs-down"></i></p>
                                     </div>
+                                    <div>
+                                        {loggedInUser ? (
+                                            loggedInUser.username === comment.author ? (
+                                                <button onClick={() => { 
+                                                    handleClick(comment)
+                                                }
+                                            } className="delete-comment-button">Delete Comment <i className="fa-solid fa-trash-can"></i></button>
+                                        ) : null
+                                    ) : null}
+                                        {loggedInUser ? (
+                                            loggedInUser.username === comment.author && selectedCommentId === comment.comment_id ? (
+                                                commentIsDeleting ? (
+                                                    <p>Deleting comment...</p>
+                                                ) : (
+                                                    <>
+                                                        {commentIsDeleting ? (
+                                                            <p>Deleting comment...</p>
+                                                        ) : (
+                                                            <>
+                                                                <p className="safety-message">Are you sure you want to delete this comment?</p>
+                                                                <button className="confirm-delete-button" onClick={() => handleDelete()}>Yes</button>
+                                                            </>
+                                                        )}
+                                                    </>
+                                                )
+                                            ) : null
+                                        ) : null}
+                                    </div>
                                 </li>
                             )
-                        })}
-                    </ul>
-                }
-            
+                            })}
+                        </ul>
+                    )
+            }
             </>}
         </>
     )
