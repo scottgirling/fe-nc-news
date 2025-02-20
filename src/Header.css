@@ -13,5 +13,19 @@ header {
     max-height: fit-content;
     margin: auto;
     margin-right: 4rem;
+}
+
+.user-login-button {
     border-radius: 45%;
+}
+
+button:hover {
+    border: 1px solid #213547;
+}
+
+.logged-in-user {
+    text-align: right;
+    margin-right: 4rem;
+    margin-top: 0;
+    font-weight: 500;
 }
