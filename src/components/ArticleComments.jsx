@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from "react"
+import { Link } from "react-router-dom";
 import { addCommentByArticleId, fetchCommentsByArticleId, deleteCommentByCommentId } from "../utils/api";
 import '../ArticleComments.css'
 import { UserAccount } from "../contexts/UserAccount";
@@ -15,6 +16,7 @@ export const ArticleComments = ({ article_id }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [selectedCommentId, setSelectedCommentId] = useState(null);
     const [commentIsDeleting, setCommentIsDeleting] = useState(false);
+    const [errorPostingComment, setErrorPostingComment] = useState(null);
 
     useEffect(() => {
         fetchCommentsByArticleId(article_id)
@@ -43,7 +45,23 @@ export const ArticleComments = ({ article_id }) => {
         .then(() => {
             setCommentBox(!commentBox);
             setNewCommentIsLoading(false);
+        })
+        .catch((error) => {
+            setErrorPostingComment(error.response.data.msg);
         });
+    }
+
+    if (errorPostingComment) {
+        return (
+            <>
+                <p>Error posting your comment. Please refresh the page, ensure all fields are filled in and try again.</p>
+                <Link to={`/articles/${article_id}`}>
+                    <button onClick={() => {
+                        window.location.reload();
+                    }}>Refresh</button>
+                </Link>
+            </>
+        )
     }
 
     const handleClick = (comment) => {
@@ -86,6 +104,7 @@ export const ArticleComments = ({ article_id }) => {
                                 name="username"
                                 id="username"
                                 defaultValue="none"
+                                required
                             >
                                 <option value="none" disabled hidden>
                                 Select a username

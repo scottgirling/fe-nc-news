@@ -15,7 +15,7 @@ export const fetchArticles = (topic, p, sort_by, order) => {
     })
     .then((response) => {
         return response.data.articles;
-    });
+    })
 }
 
 export const fetchArticleById = (article_id) => {

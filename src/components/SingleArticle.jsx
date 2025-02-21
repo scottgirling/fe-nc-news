@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { fetchArticleById, updateArticleVotesIncrement, updateArticleVotesDecrement } from "../utils/api";
 import { ArticleComments } from "./ArticleComments";
 import '../SingleArticle.css';
+import { ErrorPage } from "./ErrorPage";
 
 export const SingleArticle = () => {
     const { article_id } = useParams();
@@ -10,7 +11,8 @@ export const SingleArticle = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [hasVoted, setHasVoted] = useState(false);
     const [voteCount, setVoteCount]= useState(0);
-    const [error, setError] = useState(null);
+    const [errorVoting, setErrorVoting] = useState(null);
+    const [errorFindingArticle, setErrorFindingArticle] = useState(null);
 
     useEffect(() => {
         setIsLoading(true);
@@ -19,8 +21,17 @@ export const SingleArticle = () => {
             setArticle(returnedArticle);
             setVoteCount(returnedArticle.votes)
             setIsLoading(false);
+        })
+        .catch((error) => {
+            setErrorFindingArticle(error.response.data.msg);
         });
     }, []);
+
+    if (errorFindingArticle) {
+        return (
+            <ErrorPage errorFindingArticle={errorFindingArticle}/>
+        )
+    }
     
     const handleVoteIncrement = () => {
         setVoteCount((currentVoteCount) => {
@@ -30,13 +41,13 @@ export const SingleArticle = () => {
         .then(({ votes }) => {
             setVoteCount(votes);
             setHasVoted(true);
-            setError(null);
+            setErrorVoting(null);
         })
         .catch(() => {
             setVoteCount((currentVoteCount) => {
                 return currentVoteCount - 1;
             })
-            setError("Your vote was not successful. Please try again.");
+            setErrorVoting("Your vote was not successful. Please try again.");
         });
     }
 
@@ -48,13 +59,13 @@ export const SingleArticle = () => {
         .then(({ votes }) => {
             setVoteCount(votes);
             setHasVoted(false);
-            setError(null);
+            setErrorVoting(null);
         })
         .catch(() => {
             setVoteCount((currentVoteCount) => {
                 return currentVoteCount + 1;
             })
-            setError("Your vote was not successful. Please try again.");
+            setErrorVoting("Your vote was not successful. Please try again.");
         });
     }
 
@@ -95,7 +106,7 @@ export const SingleArticle = () => {
                                 }}><i className="fa-regular fa-heart"></i> {voteCount}</button>
                             }
                         </div>
-                            {error ? <p class="vote-error">{error}</p> : null}
+                            {errorVoting ? <p class="vote-error">{errorVoting}</p> : null}
                     </div>
                 </div>
                 <p className="article-body">{article.body}</p>

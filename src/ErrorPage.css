@@ -1,0 +1,36 @@
+.error-main {
+    height: 800px;
+}
+
+.error-number {
+    width: 34%;
+    margin: auto;
+    margin-top: 1rem;
+    font-size: 1.25rem;
+}
+
+.not-found {
+    font-size: 2rem;
+    margin-top: 0;
+    margin-bottom: .5rem;
+}
+
+.exclamation-mark {
+    font-size: 2rem;
+    margin: 0;
+}
+
+.error-ul {
+    width: 50%;
+    margin: auto;
+    text-align: left;
+}
+
+.nc-news {
+    text-decoration: underline;
+    color: black;
+}
+
+.nc-news:hover {
+    opacity: 75%;
+}

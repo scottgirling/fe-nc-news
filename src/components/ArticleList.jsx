@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Loading } from "./Loading";
 import { fetchArticles } from "../utils/api";
 import '../ArticleList.css'
+import { ErrorPage } from "./ErrorPage";
 
 export const ArticleList = () => {
     const { topic } = useParams();
@@ -13,7 +14,7 @@ export const ArticleList = () => {
 
     const [articles, setArticles] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState(false);
+    const [errorFindingTopic, setErrorFindingTopic] = useState(null);
 
     const setPage = (pageNumber) => {
         const newParams = new URLSearchParams(searchParams);
@@ -44,9 +45,17 @@ export const ArticleList = () => {
                 setArticles(returnedArticles);
                 setIsLoading(false);
             }
+        })
+        .catch((error) => {
+            setErrorFindingTopic(error.response.data.msg);
         });
     }, [topic, pageQuery, sortByQuery, orderQuery]);
 
+    if (errorFindingTopic) {
+        return (
+            <ErrorPage errorFindingTopic={errorFindingTopic} />
+        )
+    }
 
     return (
         <>
