@@ -5,6 +5,7 @@
 .top-page {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .latest-news {
@@ -13,9 +14,17 @@
     text-align: left;
 }
 
+.order-query-identifier {
+    margin-left: 5rem;
+    margin-top: 0;
+    text-align: left;
+}
+
 .pages {
     display: flex;
     margin-right: 5rem;
+    max-height: 56px;
+    ;
 }
 
 .pages p {
@@ -86,4 +95,37 @@ ul {
 .posted-by, .comment-count {
     margin-bottom: 0;
     margin-top: 1rem;
+}
+
+/* Sort Articles */
+
+.sort-articles {
+    margin: 1rem 5rem;
+    border: 2px solid #213547;
+}
+
+.sort-articles-title {
+    text-align: left;
+    margin: 1rem;
+    margin-bottom: .5rem;
+    font-weight: 500;
+    padding-left: 8px;
+    text-decoration: underline;
+}
+
+.sort-by-articles, .order-by-articles {
+    /* border: 1px solid green; */
+    display: flex;
+}
+
+.sort-by-articles p, .order-by-articles p {
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 1rem;
+    padding: .5rem;
+}
+
+.sort-by-articles label, .order-by-articles label {
+    margin-left: 1rem;
+    padding: .5rem;
 }

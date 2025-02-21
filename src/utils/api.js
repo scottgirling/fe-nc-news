@@ -14,7 +14,6 @@ export const fetchArticles = (topic, p, sort_by, order) => {
         }
     })
     .then((response) => {
-        console.log(response)
         return response.data.articles;
     });
 }
