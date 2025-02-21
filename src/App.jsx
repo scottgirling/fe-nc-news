@@ -6,6 +6,7 @@ import { ArticleList } from './components/ArticleList';
 import { SingleArticle } from './components/SingleArticle';
 import { UserLoginForm } from './components/UserLoginForm';
 import { UserAccountProvider } from './contexts/UserAccount';
+import { ErrorPage } from './components/ErrorPage';
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
         <Route path="/articles/:article_id" element={<SingleArticle />} />
         <Route path="/search/:topic" element={<ArticleList />} />
         <Route path="/login" element={<UserLoginForm/>} />
+        <Route path="*" element={<ErrorPage/>} />
       </Routes>
     </UserAccountProvider>
   )
