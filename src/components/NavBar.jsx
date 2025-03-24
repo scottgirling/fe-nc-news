@@ -19,7 +19,7 @@ export const NavBar = () => {
     return (
         <nav>
             {isLoading ? <p>Topics loading...</p> 
-            : 
+            :
             <>
                 {topics.map((topic) => {
                     return (

@@ -23,7 +23,6 @@ export const ArticleList = () => {
     }
 
     const setSortBy = (sort_by) => {
-        console.log(sort_by)
         const newParams = new URLSearchParams(searchParams);
         newParams.set("sort_by", sort_by)
         setSearchParams(newParams);
@@ -64,33 +63,7 @@ export const ArticleList = () => {
             :
             <>
                 <div className="sort-articles">
-                    {/* <p className="sort-articles-title">Sort Articles:</p> */}
                     <form>
-                        {/* <div className="sort-by-articles">
-                            <p>Sort by:</p>
-                            <label htmlFor="sort_by">Date created</label>
-                            <input 
-                                onClick={(event) => setSortBy(event.target.value)}
-                                type="radio" value="created_at" id="sort_by" name="sort_by"/>
-                            <br />
-                            <label htmlFor="sort_by">Vote count</label>
-                            <input 
-                                onClick={(event) => setSortBy(event.target.value)}
-                                type="radio" value="votes" id="sort_by" name="sort_by"/>
-                            <br />
-                        </div> */}
-                        {/* <div className="order-by-articles">
-                            <p>Order:</p>
-                            <label htmlFor="order">Ascending</label>
-                            <input 
-                                onClick={(event) => setOrderBy(event.target.value)}
-                                type="radio" value="asc" id="order" name="order"/>
-                            <br />
-                            <label htmlFor="order">Descending</label>
-                            <input 
-                                onClick={(event) => setOrderBy(event.target.value)}
-                                type="radio" value="desc" id="order" name="order"/>
-                        </div> */}
                         <div className="sort-by-articles">
                             <label htmlFor="sort_by">
                                 Sort by:
