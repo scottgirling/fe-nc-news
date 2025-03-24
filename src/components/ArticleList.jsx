@@ -4,6 +4,7 @@ import { Loading } from "./Loading";
 import { fetchArticles } from "../utils/api";
 import '../ArticleList.css'
 import { ErrorPage } from "./ErrorPage";
+import { Box, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 
 export const ArticleList = () => {
     const { topic } = useParams();
@@ -62,55 +63,64 @@ export const ArticleList = () => {
             {isLoading ? <Loading />
             :
             <>
-                <div className="sort-articles">
-                    <form>
-                        <div className="sort-by-articles">
-                            <label htmlFor="sort_by">
-                                Sort by:
-                            </label>
-                            <select
-                                value={sortByQuery}
-                                onChange={(event) => {
-                                    setSortBy(event.target.value);
-                                }}
+                <Box sx={{ minWidth: 120 }}>
+                    <FormControl 
+                        sx={{ width: "10rem", mr: "1rem"}}>
+                        <InputLabel 
+                            id="demo-simple-select-label"
+                        >
+                            Sort By
+                        </InputLabel>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={sortByQuery}
+                            label="Sort By"
+                            onChange={(event) => {
+                                setSortBy(event.target.value);
+                            }}
+                        >
+                            <MenuItem 
+                                value="created_at"
                             >
-                                <option hidden>
-                                    
-                                </option>
-                                <option 
-                                    value="created_at"
-                                >
-                                    Date Created
-                                </option>
-                                <option 
-                                    value="votes"
-                                >
-                                    Vote Count
-                                </option>
-                            </select>
-                            <br></br>
-
-                            <label htmlFor="order-by">
-                                Order by:
-                            </label>
-                            <select
-                                value={orderQuery}
-                                onChange={(event) => {
-                                    setOrderBy(event.target.value);
-                                }}
+                                Date Posted
+                            </MenuItem>
+                            <MenuItem 
+                                value="votes"
                             >
-                                <option hidden>
-                                </option>
-                                <option value="desc">
-                                    Descending
-                                </option>
-                                <option value="asc">
-                                    Ascending
-                                </option>
-                            </select>
-                        </div>
-                    </form>
-                </div>
+                                Vote Count
+                            </MenuItem>
+                        </Select>
+                    </FormControl>
+                    <FormControl 
+                        sx={{ width: "10rem"}}>
+                        <InputLabel 
+                            id="demo-simple-select-label"
+                        >
+                            Order By
+                        </InputLabel>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={orderQuery}
+                            label="Order By"
+                            onChange={(event) => {
+                                setOrderBy(event.target.value);
+                            }}
+                        >
+                            <MenuItem 
+                                value="asc"
+                            >
+                                Ascending
+                            </MenuItem>
+                            <MenuItem 
+                                value="desc"
+                            >
+                                Descending
+                            </MenuItem>
+                        </Select>
+                    </FormControl>
+                </Box>
 
                 <div className="top-page">
                     <div>
