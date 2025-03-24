@@ -1,6 +1,7 @@
 header {
     display: flex;
     justify-content: space-around;
+    padding: 0 3rem;
 }
 
 .title {
@@ -15,17 +16,12 @@ header {
     margin-right: 4rem;
 }
 
-.user-login-button {
-    border-radius: 45%;
+.sign-in-button {
+    display: flex;
+    align-items: center;
 }
 
-button:hover {
-    border: 1px solid #213547;
-}
-
-.logged-in-user {
-    text-align: right;
-    margin-right: 4rem;
-    margin-top: 0;
-    font-weight: 500;
+.sign-in-text {
+    margin-left: .5rem;
+    color: #213547;
 }

@@ -1,16 +1,17 @@
 nav {
     border-top: 2px solid #213547;
-    width: 90%;
+    width: 85vw;
     margin: auto;
     display: flex;
     list-style-type: none;
-    justify-content: space-around;
 }
 
 .nav-topic {
-    margin: .5rem 2rem;
+    margin: .5rem 0;
     padding: .5rem 1rem;
     color: #213547;
+    border-right: 1px solid #213547;
+    line-height: .5;
 }
 
 .nav-topic:hover {

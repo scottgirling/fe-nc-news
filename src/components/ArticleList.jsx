@@ -63,32 +63,51 @@ export const ArticleList = () => {
             :
             <>
                 <div className="sort-articles">
-                    <p className="sort-articles-title">Sort Articles:</p>
                     <form>
                         <div className="sort-by-articles">
-                            <p>Sort by:</p>
-                            <label htmlFor="sort_by">Date created</label>
-                            <input 
-                                onClick={(event) => setSortBy(event.target.value)}
-                                type="radio" value="created_at" id="sort_by" name="sort_by"/>
-                            <br />
-                            <label htmlFor="sort_by">Vote count</label>
-                            <input 
-                                onClick={(event) => setSortBy(event.target.value)}
-                                type="radio" value="votes" id="sort_by" name="sort_by"/>
-                            <br />
-                        </div>
-                        <div className="order-by-articles">
-                            <p>Order:</p>
-                            <label htmlFor="order">Ascending</label>
-                            <input 
-                                onClick={(event) => setOrderBy(event.target.value)}
-                                type="radio" value="asc" id="order" name="order"/>
-                            <br />
-                            <label htmlFor="order">Descending</label>
-                            <input 
-                                onClick={(event) => setOrderBy(event.target.value)}
-                                type="radio" value="desc" id="order" name="order"/>
+                            <label htmlFor="sort_by">
+                                Sort by:
+                            </label>
+                            <select
+                                value={sortByQuery}
+                                onChange={(event) => {
+                                    setSortBy(event.target.value);
+                                }}
+                            >
+                                <option hidden>
+                                    
+                                </option>
+                                <option 
+                                    value="created_at"
+                                >
+                                    Date Created
+                                </option>
+                                <option 
+                                    value="votes"
+                                >
+                                    Vote Count
+                                </option>
+                            </select>
+                            <br></br>
+
+                            <label htmlFor="order-by">
+                                Order by:
+                            </label>
+                            <select
+                                value={orderQuery}
+                                onChange={(event) => {
+                                    setOrderBy(event.target.value);
+                                }}
+                            >
+                                <option hidden>
+                                </option>
+                                <option value="desc">
+                                    Descending
+                                </option>
+                                <option value="asc">
+                                    Ascending
+                                </option>
+                            </select>
                         </div>
                     </form>
                 </div>
