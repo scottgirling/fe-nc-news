@@ -18,13 +18,16 @@ export const NavBar = () => {
 
     return (
         <nav>
-            <p className="bold">Search by topic:</p>
             {isLoading ? <p>Topics loading...</p> 
-            :
+            : 
             <>
                 {topics.map((topic) => {
                     return (
-                        <Link to={`/search/${topic.slug}?p=1`} className="nav-topic" key={topic.slug}>
+                        <Link 
+                            to={`/search/${topic.slug}?p=1`} 
+                            className="nav-topic" 
+                            key={topic.slug}
+                        >
                             {topic.slug[0].toUpperCase() + topic.slug.slice(1)}
                         </Link>
                     );

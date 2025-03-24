@@ -16,6 +16,12 @@ header {
     margin-right: 4rem;
 }
 
-button:hover {
-    border: 1px solid #213547;
+.sign-in-button {
+    display: flex;
+    align-items: center;
+}
+
+.sign-in-text {
+    margin-left: .5rem;
+    color: #213547;
 }

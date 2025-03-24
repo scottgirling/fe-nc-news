@@ -15,12 +15,19 @@ export const Header = () => {
             <Link className="user-login" to="/login">
                 {loggedInUser ? (
                     <Avatar
-                        sx={{ height: "4rem", width: "4rem" }}
                         alt="User profile picture" 
                         src={loggedInUser.avatar_url} 
                     />
                 ) : (
-                    <Avatar sx={{ background: "#9db4c0", border: "1px solid #213547", color: "#213547" }} src="/broken-image.jpg" />
+                    <span className="sign-in-button">
+                        <Avatar 
+                        sx={{ 
+                            background: "#9db4c0", 
+                            border: "1px solid #213547", 
+                            color: "#213547" }} 
+                        />
+                        <p className="sign-in-text">Sign In</p>
+                    </span>
                 )}
             </Link>
         </header>

@@ -24,7 +24,6 @@
     display: flex;
     margin-right: 5rem;
     max-height: 56px;
-    ;
 }
 
 .pages p {
@@ -101,7 +100,7 @@ ul {
 
 .sort-articles {
     margin: 1rem 5rem;
-    border: 2px solid #213547;
+    /* border: 2px solid #213547; */
 }
 
 .sort-articles-title {
@@ -114,7 +113,6 @@ ul {
 }
 
 .sort-by-articles, .order-by-articles {
-    /* border: 1px solid green; */
     display: flex;
 }
 
