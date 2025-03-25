@@ -1,12 +1,14 @@
-.loading {
-    height: 1000px;
-    width: 800px;
-}
-
-.loading p {
+.fa-newspaper {
     font-size: 4rem;
+    margin: 1rem;
 }
 
-.loading i {
+.top-loading {
+    font-size: 4rem;
+    margin: 1rem;
+}
+
+.bottom-loading {
     font-size: 2rem;
+    margin: 1rem;
 }

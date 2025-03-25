@@ -4,12 +4,15 @@
 
 .top-page {
     display: flex;
+    width: 85vw;
+    margin: auto;
     justify-content: space-between;
     align-items: center;
+    padding: 0 1rem;
 }
 
 .latest-news {
-    margin: 1rem 0 0 5rem;
+    margin: 1rem;
     font-size: 1.5rem;
     text-align: left;
 }
@@ -22,7 +25,7 @@
 
 .pages {
     display: flex;
-    margin-right: 5rem;
+    justify-content: center;
     max-height: 56px;
 }
 
@@ -38,6 +41,7 @@
     border: 1px solid #213547;
     border-radius: 0;
     padding: 0 1rem;
+    width: 7rem;
 }
 
 .pages button:hover {
@@ -46,20 +50,21 @@
 }
 
 ul {
-    padding-left: 0;
-    margin: 0;
+    margin: auto;
+    padding: 0;
+    width: 85vw;
 }
 
 .article-card {
     list-style-type: none;
     display: inline-block;
-    border: 2px solid #edeba0;
+    border: 2px solid #213547;
     border-radius: 4%;
-    width: 40%;
+    width: 18rem;
     padding: 1.5rem;
     margin: 1rem;
     vertical-align: top;
-    height: 280px;
+    height: fit-content;
 }
 
 .article-card:hover {
@@ -77,9 +82,11 @@ ul {
 }
 
 .article-title {
+    display: flex;
+    justify-content: center;
     font-size: 1rem;
     font-weight: 500;
-    height: 3rem;
+    height: 4rem;
     align-items: center;
     margin-bottom: 0;
     color: #213547;
@@ -89,36 +96,19 @@ ul {
     display: flex;
     justify-content: space-around;
     color: #213547;
+    opacity: 75%;
 }
 
-.posted-by, .comment-count {
-    margin-bottom: 0;
-    margin-top: 1rem;
-}
-
-/* Sort Articles */
-
-.sort-articles-title {
+.author-and-date {
     text-align: left;
-    margin: 1rem;
-    margin-bottom: .5rem;
-    font-weight: 500;
-    padding-left: 8px;
-    text-decoration: underline;
 }
 
-.sort-by-articles, .order-by-articles {
-    display: flex;
-}
-
-.sort-by-articles p, .order-by-articles p {
-    margin-top: 0;
+.posted-by, .vote-count {
+    margin-top: 1rem;
     margin-bottom: 0;
-    margin-left: 1rem;
-    padding: .5rem;
 }
 
-.sort-by-articles label, .order-by-articles label {
-    margin-left: 1rem;
-    padding: .5rem;
+.date-posted-single, .comment-count {
+    margin-top: .25rem;
+    margin-bottom: 0;
 }

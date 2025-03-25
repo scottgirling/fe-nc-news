@@ -94,7 +94,9 @@ export const SingleArticle = () => {
                         <p className="date-posted">{new Date(article.created_at).toDateString()}</p>
                     </div>
                     <div>
-                        <p className="related-articles">View related {article.topic} articles <i className="fa-solid fa-angle-right"></i></p>
+                        <Link to={`/search/${article.topic}?p=1`}>
+                            <p className="related-articles">View related {article.topic} articles <i className="fa-solid fa-angle-right"></i></p>
+                        </Link>
                         <p className="comment-count-individual-article"><a href="#comments"><i className="fa-regular fa-comment"></i> {article.comment_count}</a></p>
                         <div className="article-vote">
                             {hasVoted ? <button onClick={() => {

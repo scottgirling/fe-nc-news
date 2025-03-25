@@ -62,66 +62,7 @@ export const ArticleList = () => {
         <>
             {isLoading ? <Loading />
             :
-            <>
-                <Box sx={{ minWidth: 120 }}>
-                    <FormControl 
-                        sx={{ width: "10rem", mr: "1rem"}}>
-                        <InputLabel 
-                            id="demo-simple-select-label"
-                        >
-                            Sort By
-                        </InputLabel>
-                        <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={sortByQuery}
-                            label="Sort By"
-                            onChange={(event) => {
-                                setSortBy(event.target.value);
-                            }}
-                        >
-                            <MenuItem 
-                                value="created_at"
-                            >
-                                Date Posted
-                            </MenuItem>
-                            <MenuItem 
-                                value="votes"
-                            >
-                                Vote Count
-                            </MenuItem>
-                        </Select>
-                    </FormControl>
-                    <FormControl 
-                        sx={{ width: "10rem"}}>
-                        <InputLabel 
-                            id="demo-simple-select-label"
-                        >
-                            Order By
-                        </InputLabel>
-                        <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={orderQuery}
-                            label="Order By"
-                            onChange={(event) => {
-                                setOrderBy(event.target.value);
-                            }}
-                        >
-                            <MenuItem 
-                                value="asc"
-                            >
-                                Ascending
-                            </MenuItem>
-                            <MenuItem 
-                                value="desc"
-                            >
-                                Descending
-                            </MenuItem>
-                        </Select>
-                    </FormControl>
-                </Box>
-
+            <>                
                 <div className="top-page">
                     <div>
                         <>
@@ -141,36 +82,77 @@ export const ArticleList = () => {
                                         ) : null}
                                     </>
                                 )
-                            ) : orderQuery ? (
+                            ) : orderQuery && (
                                 <>
                                     <h2 className="latest-news">Articles by Date Created</h2>
-                                    {orderQuery ? (
+                                    {orderQuery && (
                                         <p className="order-query-identifier">in {orderQuery} order</p>
-                                    ) : null}
+                                    )}
                                 </>
-                            ) : null}
-                            {!sortByQuery && !orderQuery ? (
-                                <h2 className="latest-news">Lastest {topic ? topic[0].toUpperCase() + topic.slice(1) : null} Articles</h2>
-                            ) : null}
+                            )}
+                            {!sortByQuery && !orderQuery && (
+                                <h2 className="latest-news">Latest {topic ? topic[0].toUpperCase() + topic.slice(1) : null} Articles</h2>
+                            )}
                         </>
                     </div>
-
-                    <div className="pages">
-                        <button type="submit" onClick={() => {
-                            {pageQuery > 1 ? setPage(Number(pageQuery) - 1) : null};
-                        }}><i className="fa-solid fa-angle-left"></i> Previous
-                        </button>
-                        <p>{pageQuery || 1}</p>
-                        <button type="submit" onClick={() => {
-                                {!pageQuery ? (
-                                    setPage(Number(pageQuery) + 2) 
-                                ) : (
-                                    setPage(Number(pageQuery) + 1)
-                                )};
-                            }
-                        }>Next <i className="fa-solid fa-angle-right"></i>
-                        </button>
-                    </div>
+                    <Box sx={{ minWidth: 120, m: "1rem" }}>
+                        <FormControl 
+                            sx={{ width: "10rem", mr: ".5rem"}}>
+                            <InputLabel 
+                                id="demo-simple-select-label"
+                                >
+                                Sort By
+                            </InputLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={sortByQuery}
+                                label="Sort By"
+                                onChange={(event) => {
+                                    setSortBy(event.target.value);
+                                }}
+                                >
+                                <MenuItem
+                                    value="created_at"
+                                >
+                                    Date Posted
+                                </MenuItem>
+                                <MenuItem
+                                    value="votes"
+                                >
+                                    Vote Count
+                                </MenuItem>
+                            </Select>
+                        </FormControl>
+                        <FormControl 
+                            sx={{ width: "10rem", ml: ".5rem"}}>
+                            <InputLabel 
+                                id="demo-simple-select-label"
+                            >
+                                Order By
+                            </InputLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={orderQuery}
+                                label="Order By"
+                                onChange={(event) => {
+                                    setOrderBy(event.target.value);
+                                }}
+                                >
+                                <MenuItem 
+                                    value="asc"
+                                    >
+                                    Ascending
+                                </MenuItem>
+                                <MenuItem 
+                                    value="desc"
+                                    >
+                                    Descending
+                                </MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Box>
                 </div>
 
                 <main className="landing-page">
@@ -182,8 +164,14 @@ export const ArticleList = () => {
                                         <img className="article-img" src={article.article_img_url}></img>
                                         <h3 className="article-title">{article.title}</h3>
                                         <div className="article-details">
-                                            <p className="posted-by">Posted by: {article.author}</p>
-                                            <p className="comment-count"><i className="fa-regular fa-comment"></i> {article.comment_count}</p>
+                                            <div className="author-and-date">
+                                                <p className="posted-by">Posted by: {article.author}</p>
+                                                <p className="date-posted-single">Date posted: {new Date(article.created_at).toDateString()}</p>
+                                            </div>
+                                            <div>
+                                                <p className="vote-count"><i className="fa-regular fa-heart"></i> {article.votes}</p>
+                                                <p className="comment-count"><i className="fa-regular fa-comment"></i> {article.comment_count}</p>
+                                            </div>
                                         </div>
                                     </Link>
                                 </li>
@@ -192,11 +180,22 @@ export const ArticleList = () => {
                     </ul>
                 </main>
                 
-                <button type="submit" onClick={() => {
-                    setPage(Number(pageQuery) + 1);
-                }}>
-                    View More Articles <i className="fa-solid fa-angle-right"></i>
-                </button>
+                <div className="pages">
+                    <button type="submit" onClick={() => {
+                        {pageQuery > 1 ? setPage(Number(pageQuery) - 1) : null};
+                    }}><i className="fa-solid fa-angle-left"></i> Previous
+                    </button>
+                    <p>{pageQuery || 1}</p>
+                    <button type="submit" onClick={() => {
+                            {!pageQuery ? (
+                                setPage(Number(pageQuery) + 2) 
+                            ) : (
+                                setPage(Number(pageQuery) + 1)
+                            )};
+                        }
+                    }>Next <i className="fa-solid fa-angle-right"></i>
+                    </button>
+                </div>
             </>}
         </>
     );
