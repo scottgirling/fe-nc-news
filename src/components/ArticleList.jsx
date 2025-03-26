@@ -4,7 +4,7 @@ import { Loading } from "./Loading";
 import { fetchArticles } from "../utils/api";
 import '../ArticleList.css'
 import { ErrorPage } from "./ErrorPage";
-import { Box, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
+import { Box, FormControl, InputLabel, Select, MenuItem, Stack, Pagination } from "@mui/material";
 
 export const ArticleList = () => {
     const { topic } = useParams();
@@ -16,6 +16,7 @@ export const ArticleList = () => {
     const [articles, setArticles] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [errorFindingTopic, setErrorFindingTopic] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
 
     const setPage = (pageNumber) => {
         const newParams = new URLSearchParams(searchParams);
@@ -51,6 +52,22 @@ export const ArticleList = () => {
             setErrorFindingTopic(error.response.data.msg);
         });
     }, [topic, pageQuery, sortByQuery, orderQuery]);
+
+    const handleChange = () => {
+        console.log(currentPage, "<--- currentPage")
+        // if (pageQuery > 1) {
+        //     setPage(Number(pageQuery) - 1)
+        // }
+                
+        // if (!pageQuery) {
+        //     setPage(Number(pageQuery) + 2);
+        // } else {
+        //     setPage(Number(pageQuery) + 1)
+        // }
+
+        setCurrentPage(currentPage + 1);
+        // return currentPage;
+    }
 
     if (errorFindingTopic) {
         return (
@@ -179,11 +196,20 @@ export const ArticleList = () => {
                         })}
                     </ul>
                 </main>
+
+                <Stack spacing={2}>
+                    <Pagination 
+                        count={5}
+                        page={currentPage}
+                        onChange={() => handleChange()}
+                    />
+                </Stack>
                 
-                <div className="pages">
+                {/* <div className="pages">
                     <button type="submit" onClick={() => {
                         {pageQuery > 1 ? setPage(Number(pageQuery) - 1) : null};
-                    }}><i className="fa-solid fa-angle-left"></i> Previous
+                    }}>
+                        <i className="fa-solid fa-angle-left"></i> Previous
                     </button>
                     <p>{pageQuery || 1}</p>
                     <button type="submit" onClick={() => {
@@ -195,7 +221,7 @@ export const ArticleList = () => {
                         }
                     }>Next <i className="fa-solid fa-angle-right"></i>
                     </button>
-                </div>
+                </div> */}
             </>}
         </>
     );

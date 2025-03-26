@@ -4,7 +4,6 @@ import { fetchArticleById, updateArticleVotes } from "../utils/api";
 import { ArticleComments } from "./ArticleComments";
 import '../SingleArticle.css';
 import { ErrorPage } from "./ErrorPage";
-import { HandymanOutlined } from "@mui/icons-material";
 
 export const SingleArticle = () => {
     const navigate = useNavigate();
