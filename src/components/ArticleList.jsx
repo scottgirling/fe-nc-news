@@ -76,7 +76,7 @@ export const ArticleList = () => {
                                     </>
                                 ) : (
                                     <>
-                                        <h2 className="latest-news">{topic ? topic[0].toUpperCase() + topic.slice(1) : null} Articles by Date Created</h2>
+                                        <h2 className="latest-news">{topic ? topic[0].toUpperCase() + topic.slice(1) : null} Articles by Date Posted</h2>
                                         {orderQuery ? (
                                             <p className="order-query-identifier">in {orderQuery} order</p>
                                         ) : null}
