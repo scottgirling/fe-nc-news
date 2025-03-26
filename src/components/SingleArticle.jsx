@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { fetchArticleById, updateArticleVotesIncrement, updateArticleVotesDecrement } from "../utils/api";
+import { fetchArticleById, updateArticleVotes } from "../utils/api";
 import { ArticleComments } from "./ArticleComments";
 import '../SingleArticle.css';
 import { ErrorPage } from "./ErrorPage";
@@ -19,7 +19,7 @@ export const SingleArticle = () => {
         fetchArticleById(article_id)
         .then((returnedArticle) => {
             setArticle(returnedArticle);
-            setVoteCount(returnedArticle.votes)
+            setVoteCount(returnedArticle.votes);
             setIsLoading(false);
         })
         .catch((error) => {
@@ -33,38 +33,20 @@ export const SingleArticle = () => {
         )
     }
     
-    const handleVoteIncrement = () => {
+    const handleVote = (voteChange) => {
         setVoteCount((currentVoteCount) => {
-            return currentVoteCount + 1;
+            return currentVoteCount + voteChange;
         });
-        updateArticleVotesIncrement(article_id)
+        updateArticleVotes(article_id, voteChange)
         .then(({ votes }) => {
             setVoteCount(votes);
-            setHasVoted(true);
             setErrorVoting(null);
         })
         .catch(() => {
             setVoteCount((currentVoteCount) => {
-                return currentVoteCount - 1;
+                return currentVoteCount - voteChange;
             })
-            setErrorVoting("Your vote was not successful. Please try again.");
-        });
-    }
-
-    const handleVoteDecrement = () => {
-        setVoteCount((currentVoteCount) => {
-            return currentVoteCount - 1;
-        });
-        updateArticleVotesDecrement(article_id)
-        .then(({ votes }) => {
-            setVoteCount(votes);
-            setHasVoted(false);
-            setErrorVoting(null);
-        })
-        .catch(() => {
-            setVoteCount((currentVoteCount) => {
-                return currentVoteCount + 1;
-            })
+            setHasVoted(hasVoted);
             setErrorVoting("Your vote was not successful. Please try again.");
         });
     }
@@ -99,16 +81,19 @@ export const SingleArticle = () => {
                         </Link>
                         <p className="comment-count-individual-article"><a href="#comments"><i className="fa-regular fa-comment"></i> {article.comment_count}</a></p>
                         <div className="article-vote">
-                            {hasVoted ? <button onClick={() => {
-                                return handleVoteDecrement();
-                            }}><i className="fa-solid fa-heart"></i> {voteCount}</button>
-                            :
+                            {hasVoted ? ( 
                                 <button onClick={() => {
-                                    return handleVoteIncrement()
+                                    setHasVoted(false);
+                                    return handleVote(-1);
+                                }}><i className="fa-solid fa-heart"></i> {voteCount}</button>
+                            ) : (
+                                <button onClick={() => {
+                                    setHasVoted(true);
+                                    return handleVote(1)
                                 }}><i className="fa-regular fa-heart"></i> {voteCount}</button>
-                            }
+                            )}
                         </div>
-                            {errorVoting ? <p class="vote-error">{errorVoting}</p> : null}
+                            {errorVoting && <p class="vote-error">{errorVoting}</p>}
                     </div>
                 </div>
                 <p className="article-body">{article.body}</p>
