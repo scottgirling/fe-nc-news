@@ -1,3 +1,8 @@
+.single-article {
+    width: 85vw;
+    margin: auto;
+}
+
 .back-to-articles-button {
     font-size: .75rem;
     display: block;
@@ -16,6 +21,8 @@
 .article-info {
     display: flex;
     justify-content: space-between;
+    width: 90%;
+    margin: auto;
 }
 
 .posted-by-individual-article {
@@ -66,7 +73,7 @@
 }
 
 .article-body {
-    border-top: 2px solid #edeba0;
+    border-top: 2px solid #213547;
     width: 80%;
     margin: auto;
     padding: 2rem;

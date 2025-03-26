@@ -68,7 +68,6 @@ export const ArticleComments = ({ article_id }) => {
         setSelectedCommentId(comment.comment_id)
     }
 
-
     const handleDelete = () => {
         setCommentIsDeleting(true);
         deleteCommentByCommentId(selectedCommentId)
@@ -85,8 +84,8 @@ export const ArticleComments = ({ article_id }) => {
                 <p className="comments-number">{comments.length}</p>
                 <button onClick={() => {
                     return handleCommentBox();
-                    }
-                } className="post-comment-button"><i className="fa-regular fa-comment"></i> {commentBox ? <p>View Comments</p> : <p>Post Comment</p>} </button>
+                }}
+                    className="post-comment-button"><i className="fa-regular fa-comment"></i> {commentBox ? <p>View Comments</p> : <p>Post Comment</p>} </button>
             </div>
             
             {newCommentIsLoading ? <p>Your comment is being uploaded...</p>

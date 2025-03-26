@@ -13,12 +13,13 @@
 
 .latest-news {
     margin: 1rem;
+    margin-bottom: 0;
     font-size: 1.5rem;
     text-align: left;
 }
 
 .order-query-identifier {
-    margin-left: 5rem;
+    margin-left: 1rem;
     margin-top: 0;
     text-align: left;
 }
