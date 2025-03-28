@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { addCommentByArticleId, fetchCommentsByArticleId, deleteCommentByCommentId } from "../utils/api";
 import '../ArticleComments.css'
 import { UserAccount } from "../contexts/UserAccount";
+import { Box, TextField, Button } from "@mui/material";
 
 export const ArticleComments = ({ article_id }) => {
     const { loggedInUser } = useContext(UserAccount);
@@ -17,6 +18,8 @@ export const ArticleComments = ({ article_id }) => {
     const [selectedCommentId, setSelectedCommentId] = useState(null);
     const [commentIsDeleting, setCommentIsDeleting] = useState(false);
     const [errorPostingComment, setErrorPostingComment] = useState(null);
+    const [charCount, setCharCount] = useState(0);
+    const maxCharCount = 140;
 
     useEffect(() => {
         fetchCommentsByArticleId(article_id)
@@ -39,6 +42,9 @@ export const ArticleComments = ({ article_id }) => {
     }
     
     const handleSubmitComment = (event) => {
+        if (loggedInUser) {
+            commentDetails.username = loggedInUser.username;
+        }
         setNewCommentIsLoading(true);
         event.preventDefault();
         addCommentByArticleId(article_id, commentDetails)
@@ -49,12 +55,12 @@ export const ArticleComments = ({ article_id }) => {
         .catch((error) => {
             setErrorPostingComment(error.response.data.msg);
         });
-    }
+}
 
     if (errorPostingComment) {
         return (
             <>
-                <p>Error posting your comment. Please refresh the page, ensure all fields are filled in and try again.</p>
+                <p>Error posting your comment. Please refresh the page, ensure you are logged in and try again.</p>
                 <Link to={`/articles/${article_id}`}>
                     <button onClick={() => {
                         window.location.reload();
@@ -96,7 +102,33 @@ export const ArticleComments = ({ article_id }) => {
                     ) : (
                     commentBox ? 
                         <>
-                        <form onSubmit={(event) => handleSubmitComment(event)}>
+                        <Box sx={{ mt: "1rem"}}>
+                            <TextField 
+                                id="outlined-basic"
+                                name="body"
+                                label="Post a comment..." 
+                                variant="outlined"
+                                sx={{ width: "50vw" }}
+                                slotProps={{ htmlInput: { maxLength: 140 } }}
+                                multiline
+                                helperText={`${maxCharCount - charCount} Characters remaining`}
+                                onChange={(event) => {
+                                    handleCommentBody(event);
+                                    setCharCount(event.target.value.length)
+                                }}
+                            />
+                            <Button 
+                                variant="contained"
+                                sx={{ m: 1.25, bgcolor: "#213547" }}
+                                onClick={(event) => {
+                                    handleSubmitComment(event)
+                                }}
+                            >
+                                Submit
+                            </Button>
+                        </Box>
+
+                        {/* <form onSubmit={(event) => handleSubmitComment(event)}>
                             <label htmlFor="username">Username: </label>
                             <select
                                 onBlur={(event) => handleCommentBody(event)}
@@ -128,7 +160,7 @@ export const ArticleComments = ({ article_id }) => {
                             </input>
                             <br />
                             <input className="comment-submit-button" type="submit"></input>
-                        </form>
+                        </form> */}
                         </>
                         :
                         <ul>
