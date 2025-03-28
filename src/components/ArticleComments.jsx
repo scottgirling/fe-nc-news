@@ -127,40 +127,6 @@ export const ArticleComments = ({ article_id }) => {
                                 Submit
                             </Button>
                         </Box>
-
-                        {/* <form onSubmit={(event) => handleSubmitComment(event)}>
-                            <label htmlFor="username">Username: </label>
-                            <select
-                                onBlur={(event) => handleCommentBody(event)}
-                                name="username"
-                                id="username"
-                                defaultValue="none"
-                                required
-                            >
-                                <option value="none" disabled hidden>
-                                Select a username
-                                </option>
-                                <option value="cooljmessy">cooljmessy</option>
-                                <option value="weegembump">weegembump</option>
-                                <option value="tickle122">tickle122</option>
-                                <option value="happyamy2016">happyamy2016</option>
-                                <option value="jessjelly">jessjelly</option>
-                                </select>
-                            <br />
-                            <label htmlFor="body"></label>
-                                <input
-                                type="textarea"
-                                name="body"
-                                id="body"
-                                className="comment-box"
-                                placeholder="Add comment..."
-                                required
-                                onBlur={(event) => handleCommentBody(event)}
-                                >
-                            </input>
-                            <br />
-                            <input className="comment-submit-button" type="submit"></input>
-                        </form> */}
                         </>
                         :
                         <ul>
