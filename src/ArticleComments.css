@@ -28,30 +28,8 @@
     margin-left: 1rem;
 }
 
-.post-comment-button {
-    background-color: #9db4c0;
-    border: 1px solid #213547;
-    color: #213547;
-    padding: 1rem;
-    height: max-content;
-    margin: auto;
-    margin-right: 0;
-    display: flex;
-}
-
-.post-comment-button p {
-    margin: 0;
-    margin-left: .2rem
-}
-
 .fa-comment {
     padding: .1rem;
-}
-
-.post-comment-button:hover {
-    background-color: #213547;
-    border: 1px solid #213547;
-    color: white;
 }
 
 .comment-details {
