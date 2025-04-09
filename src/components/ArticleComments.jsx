@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react"
 import { Link } from "react-router-dom";
-import { addCommentByArticleId, fetchCommentsByArticleId, deleteCommentByCommentId } from "../utils/api";
+import { addCommentByArticleId, fetchCommentsByArticleId, deleteCommentByCommentId, fetchUsers } from "../utils/api";
 import '../ArticleComments.css'
 import { UserAccount } from "../contexts/UserAccount";
 import { Box, TextField, Button, Tooltip } from "@mui/material";
@@ -13,6 +13,7 @@ export const ArticleComments = ({ article_id }) => {
         username: "",
         body: ""
     });
+    const [users, setUsers] = useState([]);
     const [newCommentIsLoading, setNewCommentIsLoading] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [selectedCommentId, setSelectedCommentId] = useState(null);
@@ -25,8 +26,14 @@ export const ArticleComments = ({ article_id }) => {
         fetchCommentsByArticleId(article_id)
         .then((returnedComments) => {
             setComments(returnedComments);
-            setIsLoading(false);
+        })
+        .then(() => {
+            fetchUsers()
+            .then((returnedUsers) => {
+                setUsers(returnedUsers);
+            })
         });
+        setIsLoading(false);
     }, [comments]);
 
     const handleCommentBox = () => {
@@ -55,7 +62,7 @@ export const ArticleComments = ({ article_id }) => {
         .catch((error) => {
             setErrorPostingComment(error.response.data.msg);
         });
-}
+    }
 
     if (errorPostingComment) {
         return (
@@ -83,6 +90,18 @@ export const ArticleComments = ({ article_id }) => {
             alert("Successfuly deleted comment");
             setCommentIsDeleting(false);
         });
+    }
+
+    const disableSubmitButton = () => {
+        let isSubmitCommentButtonDisabled;
+    
+        if (commentDetails.body.length < 1) {
+            isSubmitCommentButtonDisabled = true;
+        } else {
+            isSubmitCommentButtonDisabled = false;
+        }
+
+        return isSubmitCommentButtonDisabled;
     }
 
     return (
@@ -135,7 +154,7 @@ export const ArticleComments = ({ article_id }) => {
                                 sx={{ width: "50vw" }}
                                 slotProps={{ htmlInput: { maxLength: 140 } }}
                                 multiline
-                                helperText={`${maxCharCount - charCount} Characters remaining`}
+                                helperText={`${maxCharCount - charCount} characters remaining`}
                                 onChange={(event) => {
                                     handleCommentBody(event);
                                     setCharCount(event.target.value.length)
@@ -144,6 +163,7 @@ export const ArticleComments = ({ article_id }) => {
                             <Button 
                                 variant="contained"
                                 sx={{ m: 1.25, bgcolor: "#213547" }}
+                                disabled={disableSubmitButton()}
                                 onClick={(event) => {
                                     handleSubmitComment(event)
                                 }}
@@ -158,7 +178,13 @@ export const ArticleComments = ({ article_id }) => {
                             return (
                                 <li className="comment-card" key={comment.comment_id}>
                                     <div className="comment-details">
-                                        <p className="comment-avatar"><i className="fa-solid fa-user"></i></p>
+                                        {users.map((user) => {
+                                            return (
+                                                user.username === comment.author && (
+                                                    <img src={user.avatar_url}></img>
+                                                )
+                                            )
+                                        })}
                                         <p className="comment-author">{comment.author}</p>
                                         <p className="comment-date">{new Date(comment.created_at).toDateString()}</p>
                                     </div>
