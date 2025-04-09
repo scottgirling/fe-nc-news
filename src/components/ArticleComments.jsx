@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { addCommentByArticleId, fetchCommentsByArticleId, deleteCommentByCommentId } from "../utils/api";
 import '../ArticleComments.css'
 import { UserAccount } from "../contexts/UserAccount";
-import { Box, TextField, Button } from "@mui/material";
+import { Box, TextField, Button, Tooltip } from "@mui/material";
 
 export const ArticleComments = ({ article_id }) => {
     const { loggedInUser } = useContext(UserAccount);
@@ -64,7 +64,9 @@ export const ArticleComments = ({ article_id }) => {
                 <Link to={`/articles/${article_id}`}>
                     <button onClick={() => {
                         window.location.reload();
-                    }}>Refresh</button>
+                    }}>
+                        Refresh
+                    </button>
                 </Link>
             </>
         )
@@ -88,10 +90,32 @@ export const ArticleComments = ({ article_id }) => {
             <div id="comments" className="comments-top">
                 <p className="comments-title">Comments</p>
                 <p className="comments-number">{comments.length}</p>
-                <button onClick={() => {
-                    return handleCommentBox();
-                }}
-                    className="post-comment-button"><i className="fa-regular fa-comment"></i> {commentBox ? <p>View Comments</p> : <p>Post Comment</p>} </button>
+                {loggedInUser ? (
+                    <Button 
+                        variant="outlined"
+                        sx={{ m: "auto", mr: 0, color: "#213547", borderColor: "#213547", padding: "0 1rem", borderRadius: "8px", textTransform: "none", ":hover": { backgroundColor: "#213547", color: "white", borderColor: "#213547", transition: "none" } }}
+                        onClick={() => {
+                            return handleCommentBox();
+                        }}
+                    >
+                        <i className="fa-regular fa-comment"></i>
+                        {commentBox ? (
+                            <p>View Comments</p> 
+                        ) : (
+                            <p>Post Comment</p>
+                        )}
+                    </Button>
+                ) : (
+                    <Tooltip arrow title="Sign in to post a comment">
+                        <Button
+                            variant="outlined"
+                            sx={{ m: "auto", mr: 0, color: "#213547", borderColor: "#213547", padding: "0 1rem", borderRadius: "8px", opacity: "50%", textTransform: "none", ":hover": { borderColor: "#213547" } }}
+                            
+                        >
+                            <i className="fa-regular fa-comment"></i><p>Post Comment</p>
+                        </Button>
+                    </Tooltip>
+                )}
             </div>
             
             {newCommentIsLoading ? <p>Your comment is being uploaded...</p>
