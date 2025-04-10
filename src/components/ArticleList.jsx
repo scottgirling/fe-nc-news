@@ -196,7 +196,7 @@ export const ArticleList = () => {
                        page={Number(pageQuery) || 1}
                        shape="rounded"
                        onChange={(event) => handleChange(event)}
-                       sx={{ mt: 1, width: "65vw", padding: ".5rem 1rem", "& > *": {  justifyContent: "center" } }}
+                       sx={{ border: "none", mt: "2rem", width: "65vw", "& > *": {  justifyContent: "center" } }}
                     />
                </Stack>
             </>}

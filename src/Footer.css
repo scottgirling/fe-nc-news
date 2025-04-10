@@ -1,0 +1,26 @@
+.footer {
+    background-color: #213547;
+    color: lightgray;
+    padding: 4rem 2rem 1rem 2rem;
+    margin-top: 4rem;
+}
+
+.footer-columns {
+    display: flex;
+    justify-content: space-around;
+}
+
+.footer-news, .footer-support, .footer-services {
+    width: 25vw
+}
+
+.footer h1 {
+    font-size: 1.5rem;
+    margin: 1rem 0;
+}
+
+.footer p {
+    font-size: 1rem;
+    margin: 1rem 0;
+    color: lightgray;
+}

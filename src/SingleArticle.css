@@ -10,6 +10,13 @@
     margin-left: 3rem;
 }
 
+.back-to-articles-button-bottom {
+    font-size: .75rem;
+    display: block;
+    margin-top: 3rem;
+    margin-left: 3rem;
+}
+
 #link-width {
    width: max-content;
 }
@@ -100,4 +107,9 @@
 .vote-error {
     margin-right: 4rem;
     margin-top: 0rem;
+}
+
+.article-loading {
+    margin-top: 2rem;
+    margin-bottom: 50vh;
 }

@@ -7,6 +7,7 @@ import { SingleArticle } from './components/SingleArticle';
 import { UserLoginForm } from './components/UserLoginForm';
 import { UserAccountProvider } from './contexts/UserAccount';
 import { ErrorPage } from './components/ErrorPage';
+import { Footer } from './components/Footer';
 
 function App() {
 
@@ -22,6 +23,8 @@ function App() {
         <Route path="/login" element={<UserLoginForm/>} />
         <Route path="*" element={<ErrorPage/>} />
       </Routes>
+
+      <Footer />
     </UserAccountProvider>
   )
 }
