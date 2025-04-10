@@ -18,6 +18,10 @@
     text-align: left;
 }
 
+.css-1toxriw-MuiList-root-MuiMenu-list {
+    width: auto;
+}
+
 .order-query-identifier {
     margin-left: 1rem;
     margin-top: 0;

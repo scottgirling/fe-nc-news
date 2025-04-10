@@ -107,7 +107,7 @@ export const ArticleList = () => {
                     </div>
                     <Box sx={{ minWidth: 120, m: "1rem" }}>
                         <FormControl 
-                            sx={{ width: "10rem", mr: ".5rem"}}>
+                            sx={{ width: "10rem", mr: ".5rem" }}>
                             <InputLabel 
                                 id="demo-simple-select-label"
                                 >
@@ -122,12 +122,12 @@ export const ArticleList = () => {
                                     setSortBy(event.target.value);
                                 }}
                                 >
-                                <MenuItem
+                                <MenuItem 
                                     value="created_at"
                                 >
                                     Date Posted
                                 </MenuItem>
-                                <MenuItem
+                                <MenuItem 
                                     value="votes"
                                 >
                                     Vote Count
