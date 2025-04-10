@@ -45,7 +45,16 @@ export const updateArticleVotes = (article_id, voteChange) => {
     })
     .then((response) => {
         return response.data.updatedArticle;
+    });
+}
+
+export const updateCommentVotes = (comment_id, voteChange) => {
+    return newsApi.patch(`comments/${comment_id}`, {
+        inc_votes: voteChange
     })
+    .then((response) => {
+        return response.data.updatedComment;
+    });
 }
 
 export const addCommentByArticleId = (article_id, commentDetails) => {
@@ -59,7 +68,7 @@ export const fetchUsers = () => {
     return newsApi.get("users")
     .then((response) => {
         return response.data.users;
-    })
+    });
 }
 
 export const deleteCommentByCommentId = (comment_id) => {

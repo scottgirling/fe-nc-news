@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react"
 import { Link } from "react-router-dom";
-import { addCommentByArticleId, fetchCommentsByArticleId, deleteCommentByCommentId, fetchUsers } from "../utils/api";
+import { addCommentByArticleId, fetchCommentsByArticleId, deleteCommentByCommentId, fetchUsers, updateCommentVotes } from "../utils/api";
 import '../ArticleComments.css'
 import { UserAccount } from "../contexts/UserAccount";
 import { Box, TextField, Button, Tooltip } from "@mui/material";
@@ -19,6 +19,9 @@ export const ArticleComments = ({ article_id }) => {
     const [selectedCommentId, setSelectedCommentId] = useState(null);
     const [commentIsDeleting, setCommentIsDeleting] = useState(false);
     const [errorPostingComment, setErrorPostingComment] = useState(null);
+    const [commentVoteCount, setCommentVoteCount] = useState(0);
+    const [errorCommentVoting, setErrorCommentVoting] = useState(null);
+    const [commentToBeUpdated, setCommentToBeUpdated] = useState({});
     const [charCount, setCharCount] = useState(0);
     const maxCharCount = 140;
 
@@ -102,6 +105,21 @@ export const ArticleComments = ({ article_id }) => {
         }
 
         return isSubmitCommentButtonDisabled;
+    }
+
+    const handleCommentVote = (comment, voteChange) => {
+        setCommentToBeUpdated(comment);
+        updateCommentVotes(comment.comment_id, voteChange)
+        .then(( { votes }) => {
+            setCommentVoteCount(votes);
+            setErrorCommentVoting(null);
+        })
+        .catch(() => {
+            setCommentVoteCount((currentCommentVoteCount) => {
+                return currentCommentVoteCount - voteChange;
+            })
+            setErrorCommentVoting("Your vote was not successful. Please try again.")
+        });
     }
 
     return (
@@ -193,10 +211,23 @@ export const ArticleComments = ({ article_id }) => {
                                         </div>
                                         <p className="comment-body">{comment.body}</p>
                                         <div className="comment-vote">
-                                            <p><i className="fa-solid fa-thumbs-up"></i></p>
-                                            <p className="comment-votes">{comment.votes}</p>
-                                            <p><i className="fa-solid fa-thumbs-down"></i></p>
+                                            <button onClick={() => {
+                                                setCommentVoteCount(comment.votes + 1)
+                                                handleCommentVote(comment, 1)
+                                            }}><i className="fa-solid fa-thumbs-up"></i></button>
+                                                {commentToBeUpdated.comment_id === comment.comment_id ? (
+                                                    <p>{commentVoteCount}</p>
+                                                ) : (
+                                                    <p>{comment.votes}</p>
+                                                )}
+                                            <button onClick={() => {
+                                                setCommentVoteCount(comment.votes - 1)
+                                                handleCommentVote(comment, -1)
+                                            }}><i className="fa-solid fa-thumbs-down"></i></button>
                                         </div>
+                                        {commentToBeUpdated.comment_id === comment.comment_id &&
+                                            <p className="error-comment-voting">{errorCommentVoting}</p>
+                                        }
                                         <div>
                                             {loggedInUser && (
                                                 loggedInUser.username === comment.author && (

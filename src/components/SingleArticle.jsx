@@ -4,7 +4,6 @@ import { fetchArticleById, updateArticleVotes } from "../utils/api";
 import { ArticleComments } from "./ArticleComments";
 import '../SingleArticle.css';
 import { ErrorPage } from "./ErrorPage";
-import { HandymanOutlined } from "@mui/icons-material";
 
 export const SingleArticle = () => {
     const navigate = useNavigate();
@@ -103,7 +102,7 @@ export const SingleArticle = () => {
                                     }}><i className="fa-regular fa-heart"></i> {voteCount}</button>
                                 )}
                             </div>
-                                {errorVoting && <p class="vote-error">{errorVoting}</p>}
+                                {errorVoting && <p className="vote-error">{errorVoting}</p>}
                         </div>
                     </div>
                     <p className="article-body">{article.body}</p>

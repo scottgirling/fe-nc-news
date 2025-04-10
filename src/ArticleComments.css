@@ -73,6 +73,13 @@
     margin: 0 1rem;
 }
 
+.comment-vote button {
+    background-color: #9db4c0;
+    color: #213547;
+    border: none;
+    padding: 0 .5rem;
+}
+
 .comment-vote p {
     margin: 1rem .5rem;
 }
@@ -105,4 +112,10 @@
     margin-left: .5rem;
     text-align: left;
     font-weight: 500;
+}
+
+.error-comment-voting {
+    margin-right: 4rem;
+    margin-top: 0rem;
+    margin-bottom: 0rem;
 }
