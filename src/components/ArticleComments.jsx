@@ -129,7 +129,6 @@ export const ArticleComments = ({ article_id }) => {
                         <Button
                             variant="outlined"
                             sx={{ m: "auto", mr: 0, color: "#213547", borderColor: "#213547", padding: "0 1rem", borderRadius: "8px", opacity: "50%", textTransform: "none", ":hover": { borderColor: "#213547" } }}
-                            
                         >
                             <i className="fa-regular fa-comment"></i><p>Post Comment</p>
                         </Button>
@@ -173,59 +172,66 @@ export const ArticleComments = ({ article_id }) => {
                         </Box>
                         </>
                         :
-                        <ul>
-                            {comments.map((comment) => {
-                            return (
-                                <li className="comment-card" key={comment.comment_id}>
-                                    <div className="comment-details">
-                                        {users.map((user) => {
-                                            return (
-                                                user.username === comment.author && (
-                                                    <img src={user.avatar_url}></img>
+                        <>
+                        {!comments.length ? (
+                            <p>There are no comments yet. Why don't you write one?</p>
+                        ) : (
+                            <ul>
+                                {comments.map((comment) => {
+                                return (
+                                    <li className="comment-card" key={comment.comment_id}>
+                                        <div className="comment-details">
+                                            {users.map((user) => {
+                                                return (
+                                                    user.username === comment.author && (
+                                                        <img src={user.avatar_url}></img>
+                                                    )
                                                 )
-                                            )
-                                        })}
-                                        <p className="comment-author">{comment.author}</p>
-                                        <p className="comment-date">{new Date(comment.created_at).toDateString()}</p>
-                                    </div>
-                                    <p className="comment-body">{comment.body}</p>
-                                    <div className="comment-vote">
-                                        <p><i className="fa-solid fa-thumbs-up"></i></p>
-                                        <p className="comment-votes">{comment.votes}</p>
-                                        <p><i className="fa-solid fa-thumbs-down"></i></p>
-                                    </div>
-                                    <div>
-                                        {loggedInUser ? (
-                                            loggedInUser.username === comment.author ? (
-                                                <button onClick={() => { 
-                                                    handleClick(comment)
-                                                }
-                                            } className="delete-comment-button">Delete Comment <i className="fa-solid fa-trash-can"></i></button>
-                                        ) : null
-                                    ) : null}
-                                        {loggedInUser ? (
-                                            loggedInUser.username === comment.author && selectedCommentId === comment.comment_id ? (
-                                                commentIsDeleting ? (
-                                                    <p>Deleting comment...</p>
-                                                ) : (
-                                                    <>
-                                                        {commentIsDeleting ? (
-                                                            <p>Deleting comment...</p>
-                                                        ) : (
-                                                            <>
-                                                                <p className="safety-message">Are you sure you want to delete this comment?</p>
-                                                                <button className="confirm-delete-button" onClick={() => handleDelete()}>Yes</button>
-                                                            </>
-                                                        )}
-                                                    </>
+                                            })}
+                                            <p className="comment-author">{comment.author}</p>
+                                            <p className="comment-date">{new Date(comment.created_at).toDateString()}</p>
+                                        </div>
+                                        <p className="comment-body">{comment.body}</p>
+                                        <div className="comment-vote">
+                                            <p><i className="fa-solid fa-thumbs-up"></i></p>
+                                            <p className="comment-votes">{comment.votes}</p>
+                                            <p><i className="fa-solid fa-thumbs-down"></i></p>
+                                        </div>
+                                        <div>
+                                            {loggedInUser && (
+                                                loggedInUser.username === comment.author && (
+                                                    <button onClick={() => { 
+                                                        handleClick(comment)
+                                                    }
+                                                } className="delete-comment-button">Delete Comment <i className="fa-solid fa-trash-can"></i></button>
                                                 )
-                                            ) : null
-                                        ) : null}
-                                    </div>
-                                </li>
-                            )
-                            })}
-                        </ul>
+                                            )}
+                                            {loggedInUser && (
+                                                loggedInUser.username === comment.author && selectedCommentId === comment.comment_id && (
+                                                    commentIsDeleting ? (
+                                                        <p>Deleting comment...</p>
+                                                    ) : (
+                                                        <>
+                                                            {commentIsDeleting ? (
+                                                                <p>Deleting comment...</p>
+                                                            ) : (
+                                                                <>
+                                                                    <p className="safety-message">Are you sure you want to delete this comment?</p>
+                                                                    <button className="confirm-delete-button" onClick={() => handleDelete()}>Yes</button>
+                                                                </>
+                                                            )}
+                                                        </>
+                                                    )
+                                                )
+                                            )}
+                                        </div>
+                                    </li>
+                                )
+                                })}
+                            </ul>
+                        )
+                        }
+                        </>
                     )
             }
             </>}

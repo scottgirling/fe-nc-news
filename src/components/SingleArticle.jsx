@@ -53,7 +53,7 @@ export const SingleArticle = () => {
     
     if (isLoading) {
         return (
-            <p>Loading article...</p>
+            <p className="article-loading">Loading article...</p>
         );
     }
 
@@ -111,7 +111,7 @@ export const SingleArticle = () => {
                 </main>
                 <div id="link-width">
                     <Link to="/">
-                        <button className="back-to-articles-button">
+                        <button className="back-to-articles-button-bottom">
                             <i className="fa-solid fa-chevron-left"></i> Back to Articles
                         </button>
                     </Link>

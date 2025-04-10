@@ -2,6 +2,7 @@ import { useContext, useState, useEffect } from "react";
 import { UserAccount } from "../contexts/UserAccount";
 import { fetchUsers } from "../utils/api";
 import { UserCard } from "./UserCard";
+import '../UserLoginForm.css';
 
 export const UserLoginForm = () => {
     const [users, setUsers] = useState([]);
@@ -35,7 +36,7 @@ export const UserLoginForm = () => {
                     <UserCard loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser}/>
                 </>
             ) : (
-                <form onSubmit={(event) => handleSubmit(event)}>
+                <form className="user-login-form" onSubmit={(event) => handleSubmit(event)}>
                     <label htmlFor="users">
                         Login to your account: </label>
                     <select
