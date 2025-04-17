@@ -28,32 +28,6 @@
     text-align: left;
 }
 
-.pages {
-    display: flex;
-    justify-content: center;
-    max-height: 56px;
-}
-
-.pages p {
-    border: 1px solid #213547;
-    margin: 0;
-    padding: 1rem;
-    color: black;
-}
-
-.pages button {
-    background-color: #CDD9DF;
-    border: 1px solid #213547;
-    border-radius: 0;
-    padding: 0 1rem;
-    width: 7rem;
-}
-
-.pages button:hover {
-    cursor: pointer;
-    text-decoration: underline;
-}
-
 ul {
     margin: auto;
     padding: 0;

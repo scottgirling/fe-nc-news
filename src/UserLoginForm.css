@@ -1,4 +1,16 @@
+.logged-in-users-name {
+    font-size: 2rem;
+}
+
 .user-login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     margin-top: 2rem;
     margin-bottom: 50vh;
+}
+
+.user-sign-in-button {
+    border-radius: 5%;
+    margin-top: 1rem;
 }

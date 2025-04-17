@@ -19,17 +19,18 @@ export const Header = () => {
                         src={loggedInUser.avatar_url} 
                     />
                 ) : (
-                    <span className="sign-in-button">
+                    <section className="sign-in-button">
                         <Avatar 
-                        sx={{ 
-                            background: "#CDD9DF", 
-                            border: "1px solid #213547", 
-                            color: "#213547" }} 
+                            sx={{ 
+                                background: "#CDD9DF", 
+                                border: "1px solid #213547", 
+                                color: "#213547" 
+                            }}
                         />
                         <p className="sign-in-text">Sign In</p>
-                    </span>
+                    </section>
                 )}
             </Link>
         </header>
-    );
+    )
 }

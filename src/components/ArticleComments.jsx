@@ -123,9 +123,9 @@ export const ArticleComments = ({ article_id }) => {
     }
 
     return (
-        <>
-            <div id="comments" className="comments-top">
-                <p className="comments-title">Comments</p>
+        <section>
+            <section id="comments" className="comments-top">
+                <h1 className="comments-title">Comments</h1>
                 <p className="comments-number">{comments.length}</p>
                 {loggedInUser ? (
                     <Button 
@@ -152,120 +152,120 @@ export const ArticleComments = ({ article_id }) => {
                         </Button>
                     </Tooltip>
                 )}
-            </div>
+            </section>
             
-            {newCommentIsLoading ? <p>Your comment is being uploaded...</p>
-            : 
-            <>
-                {isLoading ? (
-                    <p>Loading comments...</p>
-                    ) : (
-                    commentBox ? 
-                        <>
-                        <Box sx={{ mt: "1rem"}}>
-                            <TextField 
-                                id="outlined-basic"
-                                name="body"
-                                label="Post a comment..." 
-                                variant="outlined"
-                                sx={{ width: "50vw" }}
-                                slotProps={{ htmlInput: { maxLength: 140 } }}
-                                multiline
-                                helperText={`${maxCharCount - charCount} characters remaining`}
-                                onChange={(event) => {
-                                    handleCommentBody(event);
-                                    setCharCount(event.target.value.length)
-                                }}
-                            />
-                            <Button 
-                                variant="contained"
-                                sx={{ m: 1.25, bgcolor: "#213547" }}
-                                disabled={disableSubmitButton()}
-                                onClick={(event) => {
-                                    handleSubmitComment(event)
-                                }}
-                            >
-                                Submit
-                            </Button>
-                        </Box>
-                        </>
-                        :
-                        <>
-                        {!comments.length ? (
-                            <p>There are no comments yet. Why don't you write one?</p>
-                        ) : (
-                            <ul>
-                                {comments.map((comment) => {
-                                return (
-                                    <li className="comment-card" key={comment.comment_id}>
-                                        <div className="comment-details">
-                                            {users.map((user) => {
+            <section>
+                {newCommentIsLoading ? (
+                    <p>Your comment is being uploaded...</p>
+                ) : (
+                    <section>
+                        {isLoading ? (
+                            <p>Loading comments...</p>
+                            ) : (
+                            commentBox ? (
+                                <section>
+                                    <Box sx={{ mt: "1rem"}}>
+                                        <TextField 
+                                            id="outlined-basic"
+                                            name="body"
+                                            label="Post a comment..." 
+                                            variant="outlined"
+                                            sx={{ width: "50vw" }}
+                                            slotProps={{ htmlInput: { maxLength: 140 } }}
+                                            multiline
+                                            helperText={`${maxCharCount - charCount} characters remaining`}
+                                            onChange={(event) => {
+                                                handleCommentBody(event);
+                                                setCharCount(event.target.value.length)
+                                            }}
+                                        />
+                                        <Button 
+                                            variant="contained"
+                                            sx={{ m: 1.25, bgcolor: "#213547" }}
+                                            disabled={disableSubmitButton()}
+                                            onClick={(event) => {
+                                                handleSubmitComment(event)
+                                            }}
+                                        >
+                                            Submit
+                                        </Button>
+                                    </Box>
+                                </section>
+                            ) : (
+                                <section>
+                                    {!comments.length ? (
+                                        <p>There are no comments yet. Why don't you write one?</p>
+                                    ) : (
+                                        <ul>
+                                            {comments.map((comment) => {
                                                 return (
-                                                    user.username === comment.author && (
-                                                        <img src={user.avatar_url}></img>
-                                                    )
+                                                    <li className="comment-card" key={comment.comment_id}>
+                                                        <article className="comment-details">
+                                                            {users.map((user) => {
+                                                                return (
+                                                                    user.username === comment.author && (
+                                                                        <img src={user.avatar_url}alt="User profile picture"/>
+                                                                    )
+                                                                )
+                                                            })}
+                                                            <p className="comment-author">{comment.author}</p>
+                                                            <p className="comment-date">{new Date(comment.created_at).toDateString()}</p>
+                                                        </article>
+                                                        <p className="comment-body">{comment.body}</p>
+                                                        <article className="comment-vote">
+                                                            <button onClick={() => {
+                                                                setCommentVoteCount(comment.votes + 1)
+                                                                handleCommentVote(comment, 1)
+                                                            }}><i className="fa-solid fa-thumbs-up"></i></button>
+                                                                {commentToBeUpdated.comment_id === comment.comment_id ? (
+                                                                    <p>{commentVoteCount}</p>
+                                                                ) : (
+                                                                    <p>{comment.votes}</p>
+                                                                )}
+                                                            <button onClick={() => {
+                                                                setCommentVoteCount(comment.votes - 1)
+                                                                handleCommentVote(comment, -1)
+                                                            }}><i className="fa-solid fa-thumbs-down"></i></button>
+                                                        </article>
+                                                        {commentToBeUpdated.comment_id === comment.comment_id &&
+                                                            <p className="error-comment-voting">{errorCommentVoting}</p>
+                                                        }
+                                                        <section>
+                                                            {loggedInUser && (
+                                                                loggedInUser.username === comment.author && (
+                                                                    <button onClick={() => { 
+                                                                        handleClick(comment)
+                                                                    }} 
+                                                                    className="delete-comment-button"
+                                                                    >
+                                                                        Delete Comment <i className="fa-solid fa-trash-can"></i>
+                                                                    </button>
+                                                                )
+                                                            )}
+                                                            {loggedInUser && (
+                                                                loggedInUser.username === comment.author && selectedCommentId === comment.comment_id && (
+                                                                    commentIsDeleting ? (
+                                                                        <p>Deleting comment...</p>
+                                                                    ) : (
+                                                                        <section>
+                                                                            <p className="safety-message">Are you sure you want to delete this comment?</p>
+                                                                            <button className="confirm-delete-button" onClick={() => handleDelete()}>Yes</button>
+                                                                        </section>
+                                                                    )
+                                                                )
+                                                            )}
+                                                        </section>
+                                                    </li>
                                                 )
                                             })}
-                                            <p className="comment-author">{comment.author}</p>
-                                            <p className="comment-date">{new Date(comment.created_at).toDateString()}</p>
-                                        </div>
-                                        <p className="comment-body">{comment.body}</p>
-                                        <div className="comment-vote">
-                                            <button onClick={() => {
-                                                setCommentVoteCount(comment.votes + 1)
-                                                handleCommentVote(comment, 1)
-                                            }}><i className="fa-solid fa-thumbs-up"></i></button>
-                                                {commentToBeUpdated.comment_id === comment.comment_id ? (
-                                                    <p>{commentVoteCount}</p>
-                                                ) : (
-                                                    <p>{comment.votes}</p>
-                                                )}
-                                            <button onClick={() => {
-                                                setCommentVoteCount(comment.votes - 1)
-                                                handleCommentVote(comment, -1)
-                                            }}><i className="fa-solid fa-thumbs-down"></i></button>
-                                        </div>
-                                        {commentToBeUpdated.comment_id === comment.comment_id &&
-                                            <p className="error-comment-voting">{errorCommentVoting}</p>
-                                        }
-                                        <div>
-                                            {loggedInUser && (
-                                                loggedInUser.username === comment.author && (
-                                                    <button onClick={() => { 
-                                                        handleClick(comment)
-                                                    }
-                                                } className="delete-comment-button">Delete Comment <i className="fa-solid fa-trash-can"></i></button>
-                                                )
-                                            )}
-                                            {loggedInUser && (
-                                                loggedInUser.username === comment.author && selectedCommentId === comment.comment_id && (
-                                                    commentIsDeleting ? (
-                                                        <p>Deleting comment...</p>
-                                                    ) : (
-                                                        <>
-                                                            {commentIsDeleting ? (
-                                                                <p>Deleting comment...</p>
-                                                            ) : (
-                                                                <>
-                                                                    <p className="safety-message">Are you sure you want to delete this comment?</p>
-                                                                    <button className="confirm-delete-button" onClick={() => handleDelete()}>Yes</button>
-                                                                </>
-                                                            )}
-                                                        </>
-                                                    )
-                                                )
-                                            )}
-                                        </div>
-                                    </li>
-                                )
-                                })}
-                            </ul>
-                        )
+                                        </ul>
+                                    )}
+                                </section>
+                            ))
                         }
-                        </>
-                    )
-            }
-            </>}
-        </>
+                    </section>
+                )}
+            </section>
+        </section>
     )
 }
