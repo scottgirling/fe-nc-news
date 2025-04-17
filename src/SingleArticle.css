@@ -4,13 +4,19 @@
 }
 
 .back-to-articles-button {
+    background-color: white;
+    padding: .5rem 1rem;
+    border-radius: .5rem;
     font-size: .75rem;
     display: block;
-    margin-top: 1rem;
+    margin-top: 1.5rem;
     margin-left: 3rem;
 }
 
 .back-to-articles-button-bottom {
+    background-color: white;
+    padding: .5rem 1rem;
+    border-radius: .5rem;
     font-size: .75rem;
     display: block;
     margin-top: 3rem;

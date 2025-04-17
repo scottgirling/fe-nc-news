@@ -18,22 +18,23 @@ export const NavBar = () => {
 
     return (
         <nav>
-            {isLoading ? <p>Topics loading...</p> 
-            :
-            <>
-                {topics.map((topic) => {
-                    return (
-                        <Link 
-                            to={`/search/${topic.slug}?p=1`} 
-                            className="nav-topic" 
-                            key={topic.slug}
-                        >
-                            {topic.slug[0].toUpperCase() + topic.slug.slice(1)}
-                        </Link>
-                    );
-                })}
-            </>
-            }
+            {isLoading ? (
+                <p>Topics loading...</p> 
+            ) : (
+                <section className="topic-list">
+                    {topics.map((topic) => {
+                        return (
+                            <Link 
+                                to={`/search/${topic.slug}?p=1`} 
+                                className="nav-topic" 
+                                key={topic.slug}
+                            >
+                                {topic.slug[0].toUpperCase() + topic.slug.slice(1)}
+                            </Link>
+                        )
+                    })}
+                </section>
+            )}
         </nav>
-    );
+    )
 }

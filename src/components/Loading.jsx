@@ -2,10 +2,10 @@ import '../Loading.css'
 
 export const Loading = () => {
     return (
-        <div className="loading-message">
+        <section className="loading-message">
             <i className="fa-regular fa-newspaper"></i>
-            <p className="top-loading">News flash: You're awesome!</p>
+            <h1 className="top-loading">News flash: You're awesome!</h1>
             <p className="bottom-loading">Searching for your next read...</p>
-        </div>
-    );
+        </section>
+    )
 }

@@ -1,5 +1,6 @@
 .loading-message {
     margin: 4rem 0 8rem 0;
+    min-height: 40vh;
 }
 
 .fa-newspaper {
@@ -10,9 +11,11 @@
 .top-loading {
     font-size: 4rem;
     margin: 1rem;
+    font-weight: 400;
 }
 
 .bottom-loading {
     font-size: 2rem;
     margin: 1rem;
+    font-weight: 400;
 }

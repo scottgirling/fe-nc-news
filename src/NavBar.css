@@ -6,12 +6,15 @@ nav {
     list-style-type: none;
 }
 
+.topic-list {
+    margin-top: .5rem;
+}
+
 .nav-topic {
-    margin: .5rem 0;
-    padding: .5rem 1rem;
+    margin: 0.5rem 0;
+    padding: 0 1rem;
     color: #213547;
     border-right: 1px solid #213547;
-    line-height: .5;
 }
 
 .nav-topic:hover {
