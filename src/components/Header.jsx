@@ -22,7 +22,7 @@ export const Header = () => {
                     <span className="sign-in-button">
                         <Avatar 
                         sx={{ 
-                            background: "#9db4c0", 
+                            background: "#CDD9DF", 
                             border: "1px solid #213547", 
                             color: "#213547" }} 
                         />
