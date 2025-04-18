@@ -53,21 +53,13 @@ export const ArticleList = () => {
     }, [topic, pageQuery, sortByQuery, orderQuery]);
 
     const handleChange = (event) => {
-        if (event.target.innerHTML === "<path d=\"M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z\"></path>") {
-            if (pageQuery === null) {
-                console.log(typeof Number(pageQuery + 2))
-                console.log(pageQuery)
-                setPage(Number(pageQuery) + 2);
-            } else {
-                console.log(typeof Number(pageQuery + 2))
-                console.log(pageQuery)
-                setPage(Number(pageQuery) + 1);
-            }
+        if (pageQuery === null && event.target.innerHTML === "<path d=\"M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z\"></path>") {
+            setPage(Number(pageQuery) + 2)
+        } else if (pageQuery !== null && (event.target.innerHTML === "<path d=\"M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z\"></path>" || event.target.outerHTML === "<path d=\"M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z\"></path>")) {
+            setPage(Number(pageQuery) + 1)
         } else if (event.target.innerHTML === "<path d=\"M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z\"></path>") {
-            console.log(pageQuery)
-            console.log(typeof Number(pageQuery + 2))
-            setPage(Number(pageQuery) - 1);
-        } else {
+            setPage(Number(pageQuery) - 1)
+        } else if (event.target.innerText !== "" && event.target.innerHTML !== "") {
             setPage(Number(event.target.innerText));
         }
     } 

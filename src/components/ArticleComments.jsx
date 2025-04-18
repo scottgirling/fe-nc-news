@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { addCommentByArticleId, fetchCommentsByArticleId, deleteCommentByCommentId, fetchUsers, updateCommentVotes } from "../utils/api";
 import '../ArticleComments.css'
 import { UserAccount } from "../contexts/UserAccount";
-import { Box, TextField, Button, Tooltip } from "@mui/material";
+import { Box, TextField, Button, Tooltip, Typography } from "@mui/material";
 
 export const ArticleComments = ({ article_id }) => {
     const { loggedInUser } = useContext(UserAccount);
@@ -22,6 +22,9 @@ export const ArticleComments = ({ article_id }) => {
     const [commentVoteCount, setCommentVoteCount] = useState(0);
     const [errorCommentVoting, setErrorCommentVoting] = useState(null);
     const [commentToBeUpdated, setCommentToBeUpdated] = useState({});
+    const [commentsUserHasUpVoted, setCommentsUserHasUpVoted] = useState([]);
+    const [commentsUserHasDownVoted, setCommentsUserHasDownVoted] = useState([]);
+
     const [charCount, setCharCount] = useState(0);
     const maxCharCount = 140;
 
@@ -108,18 +111,73 @@ export const ArticleComments = ({ article_id }) => {
     }
 
     const handleCommentVote = (comment, voteChange) => {
-        setCommentToBeUpdated(comment);
-        updateCommentVotes(comment.comment_id, voteChange)
-        .then(( { votes }) => {
-            setCommentVoteCount(votes);
-            setErrorCommentVoting(null);
-        })
-        .catch(() => {
-            setCommentVoteCount((currentCommentVoteCount) => {
-                return currentCommentVoteCount - voteChange;
-            })
-            setErrorCommentVoting("Your vote was not successful. Please try again.")
-        });
+        const commentBeingVotedOnId = comment.comment_id;
+        if (voteChange === 1) {
+            if (!commentsUserHasUpVoted.includes(commentBeingVotedOnId)) {
+                setCommentVoteCount(comment.votes + voteChange)
+                commentsUserHasUpVoted.push(commentBeingVotedOnId);
+                setCommentToBeUpdated(comment);
+                updateCommentVotes(comment.comment_id, voteChange)
+                .then(( { votes }) => {
+                    setCommentVoteCount(votes);
+                    setErrorCommentVoting(null);
+                })
+                .catch(() => {
+                    setCommentVoteCount((currentCommentVoteCount) => {
+                        return currentCommentVoteCount - voteChange;
+                    })
+                    setErrorCommentVoting("Your vote was not successful. Please try again.");
+                });
+            } else {
+                const commentIdToRemove = commentsUserHasUpVoted.indexOf(commentBeingVotedOnId);
+                commentsUserHasUpVoted.splice(commentIdToRemove, 1)
+                setCommentToBeUpdated(comment);
+                updateCommentVotes(comment.comment_id, -1)
+                .then(( { votes }) => {
+                    setCommentVoteCount(votes);
+                    setErrorCommentVoting(null);
+                })
+                .catch(() => {
+                    setCommentVoteCount((currentCommentVoteCount) => {
+                        return currentCommentVoteCount - voteChange;
+                    })
+                    setErrorCommentVoting("Your vote was not successful. Please try again.");
+                });
+            }
+        } else if (voteChange !== 1) {
+            if (!commentsUserHasDownVoted.includes(commentBeingVotedOnId)) {
+                setCommentVoteCount(comment.votes + voteChange)
+                commentsUserHasDownVoted.push(commentBeingVotedOnId);
+                setCommentToBeUpdated(comment);
+                updateCommentVotes(comment.comment_id, voteChange)
+                .then(( { votes }) => {
+                    setCommentVoteCount(votes);
+                    setErrorCommentVoting(null);
+                })
+                .catch(() => {
+                    setCommentVoteCount((currentCommentVoteCount) => {
+                        return currentCommentVoteCount - voteChange;
+                    })
+                    setErrorCommentVoting("Your vote was not successful. Please try again.");
+                });
+            } 
+            else {
+                const commentIdToRemove = commentsUserHasDownVoted.indexOf(commentBeingVotedOnId);
+                commentsUserHasDownVoted.splice(commentIdToRemove, 1)
+                setCommentToBeUpdated(comment);
+                updateCommentVotes(comment.comment_id, 1)
+                .then(( { votes }) => {
+                    setCommentVoteCount(votes);
+                    setErrorCommentVoting(null);
+                })
+                .catch(() => {
+                    setCommentVoteCount((currentCommentVoteCount) => {
+                        return currentCommentVoteCount - voteChange;
+                    })
+                    setErrorCommentVoting("Your vote was not successful. Please try again.");
+                });
+            }
+        }
     }
 
     return (
@@ -213,19 +271,37 @@ export const ArticleComments = ({ article_id }) => {
                                                         </article>
                                                         <p className="comment-body">{comment.body}</p>
                                                         <article className="comment-vote">
-                                                            <button onClick={() => {
-                                                                setCommentVoteCount(comment.votes + 1)
-                                                                handleCommentVote(comment, 1)
-                                                            }}><i className="fa-solid fa-thumbs-up"></i></button>
-                                                                {commentToBeUpdated.comment_id === comment.comment_id ? (
-                                                                    <p>{commentVoteCount}</p>
-                                                                ) : (
-                                                                    <p>{comment.votes}</p>
-                                                                )}
-                                                            <button onClick={() => {
-                                                                setCommentVoteCount(comment.votes - 1)
-                                                                handleCommentVote(comment, -1)
-                                                            }}><i className="fa-solid fa-thumbs-down"></i></button>
+                                                            {loggedInUser ? (
+                                                                <>
+                                                                    <button onClick={() => {
+                                                                        handleCommentVote(comment, 1)
+                                                                    }}><i className="fa-solid fa-thumbs-up"></i>
+                                                                    </button>
+                                                                        {commentToBeUpdated.comment_id === comment.comment_id ? (
+                                                                            <p>{commentVoteCount}</p>
+                                                                        ) : (
+                                                                            <p>{comment.votes}</p>
+                                                                        )}
+                                                                    <button onClick={() => {
+                                                                        handleCommentVote(comment, -1)
+                                                                    }}><i className="fa-solid fa-thumbs-down"></i>
+                                                                    </button>
+                                                                </>
+                                                            ) : (
+                                                                <Box>
+                                                                    <Tooltip arrow title="Sign in to like a comment">
+                                                                        <Button disabled sx={{ minWidth: "32px" }}>
+                                                                            <i className="fa-solid fa-thumbs-up"></i>
+                                                                        </Button>
+                                                                            <Typography sx={{ display: "inline-block" }}>
+                                                                                {comment.votes}
+                                                                            </Typography>
+                                                                        <Button disabled sx={{ minWidth: "32px" }}>
+                                                                            <i className="fa-solid fa-thumbs-down"></i>
+                                                                        </Button>
+                                                                    </Tooltip>
+                                                                </Box>
+                                                            )}
                                                         </article>
                                                         {commentToBeUpdated.comment_id === comment.comment_id &&
                                                             <p className="error-comment-voting">{errorCommentVoting}</p>
