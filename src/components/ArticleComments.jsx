@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import { addCommentByArticleId, fetchCommentsByArticleId, deleteCommentByCommentId, fetchUsers, updateCommentVotes } from "../utils/api";
 import '../ArticleComments.css'
 import { UserAccount } from "../contexts/UserAccount";
-import { Box, TextField, Button, Tooltip, Typography } from "@mui/material";
+import { Box, TextField, Button, Tooltip, Typography, Stack, Pagination } from "@mui/material";
 
-export const ArticleComments = ({ article_id }) => {
+export const ArticleComments = ({ article_id, commentCount }) => {
     const { loggedInUser } = useContext(UserAccount);
     const [comments, setComments] = useState([]);
     const [commentBox, setCommentBox] = useState(false);
@@ -22,14 +22,15 @@ export const ArticleComments = ({ article_id }) => {
     const [commentVoteCount, setCommentVoteCount] = useState(0);
     const [errorCommentVoting, setErrorCommentVoting] = useState(null);
     const [commentToBeUpdated, setCommentToBeUpdated] = useState({});
-    const [commentsUserHasUpVoted, setCommentsUserHasUpVoted] = useState([]);
-    const [commentsUserHasDownVoted, setCommentsUserHasDownVoted] = useState([]);
-
+    const [commentsUserHasUpVoted] = useState([]);
+    const [commentsUserHasDownVoted] = useState([]);
+    const [commentLimit, setCommentLimit] = useState(10);
     const [charCount, setCharCount] = useState(0);
     const maxCharCount = 140;
 
     useEffect(() => {
-        fetchCommentsByArticleId(article_id)
+        setIsLoading(true);
+        fetchCommentsByArticleId(article_id, commentLimit)
         .then((returnedComments) => {
             setComments(returnedComments);
         })
@@ -40,7 +41,7 @@ export const ArticleComments = ({ article_id }) => {
             })
         });
         setIsLoading(false);
-    }, [comments]);
+    }, [comments, commentLimit]);
 
     const handleCommentBox = () => {
         setCommentBox(!commentBox)
@@ -180,11 +181,23 @@ export const ArticleComments = ({ article_id }) => {
         }
     }
 
+    const disableLoadMoreCommentsButton = () => {
+        let isLoadMoreCommentsButtonDisabled;
+        
+        if (comments.length < commentLimit) {
+            isLoadMoreCommentsButtonDisabled = true;
+        } else {
+            isLoadMoreCommentsButtonDisabled = false;
+        }
+
+        return isLoadMoreCommentsButtonDisabled;
+    }
+
     return (
         <section>
             <section id="comments" className="comments-top">
                 <h1 className="comments-title">Comments</h1>
-                <p className="comments-number">{comments.length}</p>
+                <p className="comments-number">{commentCount}</p>
                 {loggedInUser ? (
                     <Button 
                         variant="outlined"
@@ -342,6 +355,15 @@ export const ArticleComments = ({ article_id }) => {
                     </section>
                 )}
             </section>
+            <Box>
+                <Button 
+                    variant="contained"
+                    sx={{ mt: 4, bgcolor: "#213547" }}
+                    disabled={disableLoadMoreCommentsButton()} 
+                    onClick={() => setCommentLimit(commentLimit + 10)}>
+                    <Typography sx={{ fontSize: 14 }}>Load more comments</Typography>
+                </Button>
+            </Box>
         </section>
     )
 }

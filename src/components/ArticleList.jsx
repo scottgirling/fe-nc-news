@@ -156,12 +156,12 @@ export const ArticleList = () => {
                                     >
                                     <MenuItem 
                                         value="asc"
-                                        >
+                                    >
                                         Ascending
                                     </MenuItem>
                                     <MenuItem 
                                         value="desc"
-                                        >
+                                    >
                                         Descending
                                     </MenuItem>
                                 </Select>
