@@ -78,3 +78,10 @@ export const fetchUsers = () => {
 export const deleteCommentByCommentId = (comment_id) => {
     return newsApi.delete(`comments/${comment_id}`);
 }
+
+export const addArticle = (postDetails) => {
+    return newsApi.post("articles", postDetails)
+    .then((response) => {
+        return response.data.newArticle;
+    });
+}
