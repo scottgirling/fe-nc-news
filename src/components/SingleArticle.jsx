@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { fetchArticleById, updateArticleVotes } from "../utils/api";
+import { fetchArticleById, updateArticleVotes, fetchUsers } from "../utils/api";
 import { ArticleComments } from "./ArticleComments";
 import '../SingleArticle.css';
 import { ErrorPage } from "./ErrorPage";
@@ -9,6 +9,7 @@ export const SingleArticle = () => {
     const navigate = useNavigate();
     const { article_id } = useParams();
     const [article, setArticle] = useState({});
+    const [users, setUsers] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [hasVoted, setHasVoted] = useState(false);
     const [voteCount, setVoteCount]= useState(0);
@@ -22,6 +23,12 @@ export const SingleArticle = () => {
             setArticle(returnedArticle);
             setVoteCount(returnedArticle.votes);
             setIsLoading(false);
+        })
+        .then(() => {
+            fetchUsers()
+            .then((returnedUsers) => {
+                setUsers(returnedUsers);
+            })
         })
         .catch((error) => {
             setErrorFindingArticle(error.response.data.msg);
@@ -76,9 +83,18 @@ export const SingleArticle = () => {
                 <h1 className="article-title-individual-article">{article.title}</h1>
                 <img src={article.article_img_url} alt="Associated article image"/>
                 <section className="article-info">
-                    <section>
+                    <section className="article-info-left">
                         <p className="posted-by-individual-article">Posted by:</p>
-                        <p className="author">{article.author}</p>
+                        <section className="article-author-pic-username">
+                            {users.map((user) => {
+                                return (
+                                    user.username === article.author && (
+                                        <img className="author-pic" src={user.avatar_url} alt="Article author profile picture"/>
+                                    )
+                                )
+                            })}
+                            <p>{article.author}</p>
+                        </section>
                         <p className="date-posted">{new Date(article.created_at).toDateString()}</p>
                     </section>
                     <section>
@@ -109,7 +125,7 @@ export const SingleArticle = () => {
                 <section>
                     <p className="article-body">{article.body}</p>
                 </section>
-                <ArticleComments article_id={article_id} />
+                <ArticleComments article_id={article_id} commentCount={article.comment_count}/>
             </section>
             <section id="link-width">
                 <Link to="/"

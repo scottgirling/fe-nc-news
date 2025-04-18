@@ -32,8 +32,12 @@ export const fetchTopics = () => {
     });
 }
 
-export const fetchCommentsByArticleId = (article_id) => {
-    return newsApi.get(`articles/${article_id}/comments`)
+export const fetchCommentsByArticleId = (article_id, commentLimit) => {
+    return newsApi.get(`articles/${article_id}/comments`, {
+        params: {
+            limit: commentLimit
+        }
+    })
     .then((response) => {
         return response.data.comments;
     });

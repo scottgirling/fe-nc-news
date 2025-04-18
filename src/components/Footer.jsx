@@ -29,7 +29,7 @@ export const Footer = () => {
                     <p>Follow NC News on X</p>
                 </section>
             </section>
-            <p>Copyright <i class="fa-regular fa-copyright"></i> 2025 Northcoders News</p>
+            <p>Copyright <i className="fa-regular fa-copyright"></i> 2025 Northcoders News</p>
             <p>This portfolio project was created as part of a Digital Skills Bootcamp in Software Engineering provided by Northcoders</p>
         </footer>
     )
