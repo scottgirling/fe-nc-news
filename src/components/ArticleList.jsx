@@ -1,7 +1,7 @@
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Loading } from "./Loading";
-import { fetchArticles } from "../utils/api";
+import { fetchAllArticles, fetchArticles } from "../utils/api";
 import '../ArticleList.css'
 import { ErrorPage } from "./ErrorPage";
 import { Box, FormControl, InputLabel, Select, MenuItem, Stack, Pagination } from "@mui/material";
@@ -14,6 +14,7 @@ export const ArticleList = () => {
     const orderQuery = searchParams.get("order");
 
     const [articles, setArticles] = useState([]);
+    const [totalNumberOfArticles, setTotalNumberOfArticles] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [errorFindingTopic, setErrorFindingTopic] = useState(null);
 
@@ -37,6 +38,10 @@ export const ArticleList = () => {
 
     useEffect(() => {
         setIsLoading(true);
+        fetchAllArticles(topic)
+        .then((returnedArticles) => {
+            setTotalNumberOfArticles(returnedArticles.length);
+        })
         fetchArticles(topic, pageQuery, sortByQuery, orderQuery)
         .then((returnedArticles) => {
             if (!returnedArticles.length) {
@@ -196,7 +201,7 @@ export const ArticleList = () => {
 
                     <Stack>
                         <Pagination
-                            count={4}
+                            count={(Math.ceil(totalNumberOfArticles / 12))}
                             page={Number(pageQuery) || 1}
                             shape="rounded"
                             onChange={(event) => handleChange(event)}
