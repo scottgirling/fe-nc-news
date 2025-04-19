@@ -85,3 +85,7 @@ export const addArticle = (postDetails) => {
         return response.data.newArticle;
     });
 }
+
+export const deleteArticle = (article_id) => {
+    return newsApi.delete(`articles/${article_id}`);
+}

@@ -115,6 +115,10 @@
     font-weight: 500;
 }
 
+.delete-comment-buttons {
+    display: flex;
+}
+
 .error-comment-voting {
     margin-right: 4rem;
     margin-top: 0rem;
