@@ -338,7 +338,10 @@ export const ArticleComments = ({ article_id, commentCount }) => {
                                                                     ) : (
                                                                         <section>
                                                                             <p className="safety-message">Are you sure you want to delete this comment?</p>
-                                                                            <button className="confirm-delete-button" onClick={() => handleDelete()}>Yes</button>
+                                                                            <section className="delete-comment-buttons">
+                                                                                <button className="confirm-delete-button-article-no" onClick={() => {handleClick(false)}}>No</button>
+                                                                                <button className="confirm-delete-button" onClick={() => handleDelete()}>Yes</button>
+                                                                            </section>
                                                                         </section>
                                                                     )
                                                                 )

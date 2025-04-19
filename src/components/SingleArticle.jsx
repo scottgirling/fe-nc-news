@@ -1,16 +1,20 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { fetchArticleById, updateArticleVotes, fetchUsers } from "../utils/api";
+import { fetchArticleById, updateArticleVotes, fetchUsers, deleteArticle } from "../utils/api";
 import { ArticleComments } from "./ArticleComments";
 import '../SingleArticle.css';
 import { ErrorPage } from "./ErrorPage";
+import { UserAccount } from "../contexts/UserAccount";
 
 export const SingleArticle = () => {
+    const { loggedInUser } = useContext(UserAccount);
     const navigate = useNavigate();
     const { article_id } = useParams();
     const [article, setArticle] = useState({});
     const [users, setUsers] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [prepArticleDelete, setPrepArticleDelete] = useState(false);
+    const [articleIsDeleting, setArticleIsDeleting] = useState(false);
     const [hasVoted, setHasVoted] = useState(false);
     const [voteCount, setVoteCount]= useState(0);
     const [errorVoting, setErrorVoting] = useState(null);
@@ -39,6 +43,16 @@ export const SingleArticle = () => {
         navigate(-1);
     }
 
+    const handleDeleteArticle = (article_id) => {
+        setArticleIsDeleting(true);
+        deleteArticle(article_id)
+        .then(() => {
+            alert("Successfully deleted article");
+            setArticleIsDeleting(false);
+            navigate(-1);
+        });
+    }
+
     const handleVote = (voteChange) => {
         setVoteCount((currentVoteCount) => {
             return currentVoteCount + voteChange;
@@ -60,6 +74,12 @@ export const SingleArticle = () => {
     if (isLoading) {
         return (
             <p className="article-loading">Loading article...</p>
+        )
+    }
+
+    if (articleIsDeleting) {
+        return (
+            <p className="article-deleting">Deleting article...</p>
         )
     }
 
@@ -119,7 +139,40 @@ export const SingleArticle = () => {
                                 </button>
                             )}
                         </section>
-                            {errorVoting && <p className="vote-error">{errorVoting}</p>}
+                        <section className="delete-article-section">
+                            {loggedInUser && loggedInUser.username === article.author && (
+                                <button 
+                                    className="delete-article"
+                                    onClick={() => {
+                                        setPrepArticleDelete(true);
+                                    }}
+                                >
+                                    <i className="fa-solid fa-trash-can"></i> Delete Article
+                                </button>
+                            )}
+                            {prepArticleDelete && (
+                                <section>
+                                    <p className="safety-message">Are you sure you want to delete this article?</p>
+                                    <button 
+                                        className="confirm-delete-button-article-no"
+                                        onClick={() => {
+                                            setPrepArticleDelete(false);
+                                        }}
+                                    >
+                                        No
+                                    </button>
+                                    <button 
+                                        className="confirm-delete-button-article"
+                                        onClick={() => {
+                                            handleDeleteArticle(article_id)
+                                        }}
+                                    >
+                                        Yes
+                                    </button>
+                                </section>
+                            )}
+                        </section>
+                        {errorVoting && <p className="vote-error">{errorVoting}</p>}
                     </section>
                 </section>
                 <section>
