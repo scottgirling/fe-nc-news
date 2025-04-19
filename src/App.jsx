@@ -2,7 +2,6 @@ import { Routes, Route } from 'react-router-dom';
 import './App.css'
 import { Header } from './components/Header';
 import { NavBar } from './components/NavBar';
-import { PostArticle } from './components/PostArticle';
 import { ArticleList } from './components/ArticleList';
 import { SingleArticle } from './components/SingleArticle';
 import { UserLoginForm } from './components/UserLoginForm';
@@ -16,7 +15,6 @@ function App() {
     <UserAccountProvider>
       <Header />
       <NavBar />
-      <PostArticle />
       
       <Routes>
         <Route path="/" element={<ArticleList/>} />

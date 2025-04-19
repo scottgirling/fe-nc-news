@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
 import '../ErrorPage.css';
 
-export const ErrorPage = ({ errorFindingArticle, errorFindingTopic }) => {
+export const ErrorPage = ({ errorFindingArticle, errorFindingTopic, errorPostingArticle }) => {
     return (
         <section className="error-main">
             <h1 className="error-number">404</h1>
-            {errorFindingArticle || errorFindingTopic ? (
-                <h2 className="not-found">{errorFindingArticle || errorFindingTopic.replace(".", "")}</h2>
+            {errorFindingArticle || errorFindingTopic || errorPostingArticle? (
+                <h2 className="not-found">{errorFindingArticle || errorPostingArticle || errorFindingTopic.replace(".", "")}</h2>
             ) : (
                 <h2 className="not-found">Page not found</h2>
             )}

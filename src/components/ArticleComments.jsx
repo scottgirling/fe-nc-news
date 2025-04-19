@@ -355,15 +355,17 @@ export const ArticleComments = ({ article_id, commentCount }) => {
                     </section>
                 )}
             </section>
-            <Box>
-                <Button 
-                    variant="contained"
-                    sx={{ mt: 4, bgcolor: "#213547" }}
-                    disabled={disableLoadMoreCommentsButton()} 
-                    onClick={() => setCommentLimit(commentLimit + 10)}>
-                    <Typography sx={{ fontSize: 14 }}>Load more comments</Typography>
-                </Button>
-            </Box>
+            {!commentBox && (
+                <Box>
+                    <Button 
+                        variant="contained"
+                        sx={{ mt: 4, bgcolor: "#213547" }}
+                        disabled={disableLoadMoreCommentsButton()} 
+                        onClick={() => setCommentLimit(commentLimit + 10)}>
+                        <Typography sx={{ fontSize: 14 }}>Load more comments</Typography>
+                    </Button>
+                </Box>
+            )}
         </section>
     )
 }
