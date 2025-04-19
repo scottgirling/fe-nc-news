@@ -1,6 +1,6 @@
 header {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     padding: 2rem 5rem 0 5rem;
 }
 
@@ -10,10 +10,15 @@ header {
     color: #213547;
 }
 
+.sign-in-and-post {
+    display: flex;
+    margin: 1rem 4rem;
+}
+
 .user-login {
     max-height: fit-content;
     margin: auto;
-    margin-right: 4rem;
+    margin-right: 2rem;
 }
 
 .sign-in-button {
@@ -24,4 +29,11 @@ header {
 .sign-in-text {
     margin-left: .5rem;
     color: #213547;
+}
+
+.post-article-button {
+    background-color: #CDD9DF;
+    padding: 0;
+    font-size: 1.25rem;
+    margin: auto;
 }
