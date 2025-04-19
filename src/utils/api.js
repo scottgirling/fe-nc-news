@@ -4,13 +4,26 @@ const newsApi = axios.create({
     baseURL: "https://be-nc-news-bsph.onrender.com/api/"
 });
 
-export const fetchArticles = (topic, p, sort_by, order) => {
+export const fetchArticles = (topic, p, sort_by, order, limit) => {
     return newsApi.get("articles", { 
         params: {
             topic: topic,
             p: p,
             sort_by: sort_by,
-            order: order
+            order: order,
+            limit: limit || 12
+        }
+    })
+    .then((response) => {
+        return response.data.articles;
+    })
+}
+
+export const fetchAllArticles = (topic) => {
+    return newsApi.get("articles", {
+        params: {
+            topic: topic,
+            limit: 100
         }
     })
     .then((response) => {
