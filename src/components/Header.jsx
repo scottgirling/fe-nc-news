@@ -18,7 +18,6 @@ export const Header = () => {
     })
     const [body, setBody] = useState(null);
     const [topic, setTopic] = useState(null);
-    const [newArticle, setNewArticle] = useState({});
     const [errorPostingArticle, setErrorPostingArticle] = useState(null)
     const [charCount, setCharCount] = useState(0);
     const maxCharCount = 140;
@@ -66,8 +65,7 @@ export const Header = () => {
         event.preventDefault();
         addArticle(postDetails)
         .then((returnedArticle) => {
-            setNewArticle(returnedArticle)
-            navigate(`/articles/${newArticle.article_id}`)
+            navigate(`/articles/${returnedArticle.article_id}`);
         })
         .catch((error) => {
             setErrorPostingArticle(error.response.data.msg);
