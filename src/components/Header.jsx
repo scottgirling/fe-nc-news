@@ -212,7 +212,7 @@ export const Header = () => {
                         </TextField>
                     </DialogContent>
                     <DialogActions>
-                        <Box sx={{ display: "flex", flexDirection: "column", margin: "auto" }}>
+                        <Box sx={{ display: "flex", flexDirection: "row", margin: "auto" }}>
                             <Button 
                                 sx={{ color: "#213547" }}
                                 onClick={() => {

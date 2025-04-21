@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { addCommentByArticleId, fetchCommentsByArticleId, deleteCommentByCommentId, fetchUsers, updateCommentVotes } from "../utils/api";
 import '../ArticleComments.css'
 import { UserAccount } from "../contexts/UserAccount";
-import { Box, TextField, Button, Tooltip, Typography, Stack, Pagination } from "@mui/material";
+import { Box, TextField, Button, Tooltip, Typography } from "@mui/material";
 
 export const ArticleComments = ({ article_id, commentCount }) => {
     const { loggedInUser } = useContext(UserAccount);
@@ -199,18 +199,18 @@ export const ArticleComments = ({ article_id, commentCount }) => {
                 <h1 className="comments-title">Comments</h1>
                 <p className="comments-number">{commentCount}</p>
                 {loggedInUser ? (
-                    <Button 
+                    <Button
                         variant="outlined"
-                        sx={{ m: "auto", mr: 0, color: "#213547", borderColor: "#213547", padding: "0 1rem", borderRadius: "8px", textTransform: "none", ":hover": { backgroundColor: "#213547", color: "white", borderColor: "#213547", transition: "none" } }}
+                        sx={{ m: "auto", mr: 0, color: "#213547", borderColor: "#213547", padding: "1rem", borderRadius: "8px", textTransform: "none", ":hover": { backgroundColor: "#213547", color: "white", borderColor: "#213547", transition: "none" } }}
                         onClick={() => {
                             return handleCommentBox();
                         }}
                     >
                         <i className="fa-regular fa-comment"></i>
                         {commentBox ? (
-                            <p>View Comments</p> 
+                            <Typography>View Comments</Typography> 
                         ) : (
-                            <p>Post Comment</p>
+                            <Typography>Post Comment</Typography>
                         )}
                     </Button>
                 ) : (
@@ -235,7 +235,7 @@ export const ArticleComments = ({ article_id, commentCount }) => {
                             ) : (
                             commentBox ? (
                                 <section>
-                                    <Box sx={{ mt: "1rem"}}>
+                                    <Box className="post-comment-box" sx={{ mt: "1rem" }}>
                                         <TextField 
                                             id="outlined-basic"
                                             name="body"

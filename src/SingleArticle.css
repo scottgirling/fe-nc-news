@@ -155,3 +155,69 @@
     margin-top: 2rem;
     margin-bottom: 50vh;
 }
+
+@media only screen and (max-width: 600px) {
+    .article-title-individual-article {
+        font-size: 2rem;
+    }
+    .back-to-articles-button {
+        margin-left: 0;
+    }
+    .article-image-individual-article {
+        width: 250px;
+    }
+    .article-author-pic-username {
+        margin-left: 1rem;
+    }
+    .posted-by-individual-article {
+        margin-left: 1rem;
+    }
+    .author-pic {
+        height: 3rem;
+        width: 3rem;
+        padding-right: .5rem;
+    }
+    .date-posted {
+        margin-left: 1rem;
+    }
+    .related-articles {
+        margin-right: 1rem;
+        font-size: .8rem;
+    }
+    .comment-count-individual-article {
+        margin-right: 1rem;
+    }
+    .article-vote {
+        margin-right: 1rem;
+    }
+    .article-vote button {
+        margin-top: .5rem;
+        margin-bottom: 0.25rem;
+    }
+    .article-body {
+        width: 80%;
+        padding: 1rem;
+        font-size: 1rem;
+    }
+    .delete-article-section {
+        margin-right: 1rem;
+    }
+    .delete-article {
+        font-size: .75rem;
+    }
+    .safety-message {
+        font-size: .75rem;
+    }
+    .confirm-delete-button-article {
+        margin-left: .5rem;
+        margin-bottom: .5rem;
+        font-size: 75.rem;
+    }
+    .vote-error {
+        margin-right: 1rem;
+    }
+    .back-to-articles-button-bottom {
+        margin-left: 1rem;
+        margin-top: 2rem;
+    }
+  }
