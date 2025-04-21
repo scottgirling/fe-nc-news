@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { addArticle } from '../utils/api';
 import '../Header.css';
 import { UserAccount } from '../contexts/UserAccount';
-import { Avatar, Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
+import { Avatar, Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, InputLabel, MenuItem, Select, TextField, Tooltip } from '@mui/material';
 
 export const Header = () => {
     const { loggedInUser } = useContext(UserAccount);
@@ -21,18 +21,6 @@ export const Header = () => {
     const [errorPostingArticle, setErrorPostingArticle] = useState(null)
     const [charCount, setCharCount] = useState(0);
     const maxCharCount = 140;
-
-    const disableOpenModalButton = () => {
-        let isPostArticleButtonDisabled;
-
-        if (!loggedInUser) {
-            isPostArticleButtonDisabled = true;
-        } else {
-            isPostArticleButtonDisabled = false;
-        }
-
-        return isPostArticleButtonDisabled;
-    }
 
     const disablePostArticleButton = () => {
         let isSubmitArticleButtonDisabled;
@@ -104,19 +92,33 @@ export const Header = () => {
                             </section>
                         )}
                     </Link>
-                    <button 
-                        className="post-article-button"
-                        disabled={disableOpenModalButton()}
-                        onClick={() => {
-                            setOpenModal(!openModal);
-                        }}
-                    >
-                        <i className="fa-solid fa-pen"></i>
-                    </button>
+                    {!loggedInUser ? (
+                        <Tooltip arrow title="Sign in to post an article">
+                            <button 
+                                className="post-article-button"
+                                disabled={true}
+                                onClick={() => {
+                                    setOpenModal(!openModal);
+                                }}
+                            >
+                                <i className="fa-solid fa-pen"></i>
+                            </button>
+                        </Tooltip>
+                    ) : (
+                        <button 
+                            className="post-article-button"
+                            onClick={() => {
+                                setOpenModal(!openModal);
+                            }}
+                        >
+                            <i className="fa-solid fa-pen"></i>
+                        </button>
+                    )}
                 </section>
             </header>
             <section>
                 <Dialog
+                    className="post-article-pop-up"
                     open={openModal}
                     onClose={!openModal}
                     fullWidth={true}

@@ -63,4 +63,7 @@ header {
     .sign-in-text {
         display: none;
     }
+    .post-article-pop-up .MuiPaper-root {
+        position: absolute;
+    }
   }
