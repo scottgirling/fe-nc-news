@@ -44,11 +44,6 @@
     border-radius: 50%;
 }
 
-.comment-avatar {
-    font-size: 1.5rem;
-    padding-left: 1rem;
-}
-
 .comment-author {
     width: max-content;
     display: block;
@@ -85,23 +80,6 @@
     margin: 1rem .5rem;
 }
 
-.comment-box {
-    margin-top: 1rem;
-    border: 1px solid #213547;
-    width: 80%;
-    height: 6rem;
-}
-
-.comment-submit-button {
-    margin-top: .5rem;
-    display: block;
-    margin-left: 80%;
-    background-color: #213547;
-    color: white;
-    border-radius: 5%;
-    padding: .5rem 1rem;
-}
-
 .delete-comment-button, .confirm-delete-button {
     margin-left: .5rem;
     margin-bottom: .5rem;
@@ -124,3 +102,55 @@
     margin-top: 0rem;
     margin-bottom: 0rem;
 }
+
+@media only screen and (max-width: 600px) {
+    #comments {
+        width: 100%;
+    }
+    .comments-top Button {
+        padding: 0.5rem;
+    }
+    .comment-card {
+        width: 90%;
+    }
+    .comments-number {
+        margin-left: .5rem;
+    }
+    .comment-details {
+        margin-top: .5rem;
+    }
+    .comment-details img {
+        height: 3rem;
+        width: 3rem;
+        padding: .25rem .5rem;
+        border-radius: 50%;
+    }
+    .comment-date {
+        margin-right: 1rem;
+        margin-left: 1rem;
+    }
+    .comment-body {
+        padding: .5rem .5rem 0 .5rem;
+    }
+    .comment-vote {
+        margin: 0;
+    }
+    .comment-vote p {
+        margin-top: .5rem;
+    }
+    .post-comment-box {
+        display: flex;
+        flex-direction: column;
+    }
+    .post-comment-box div {
+        width: 80vw;
+        margin: auto;
+    }
+    .post-comment-box Button {
+        margin: auto;
+        margin-top: .75rem;
+    }
+    .error-comment-voting {
+        margin-right: 1rem;
+    }
+  }

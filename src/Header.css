@@ -37,3 +37,30 @@ header {
     font-size: 1.25rem;
     margin: auto;
 }
+
+@media only screen and (max-width: 1400px) {
+    .title {
+        margin: 1rem;
+    }
+  }
+
+@media only screen and (max-width: 600px) {
+    header {
+        padding: .5rem 1.25rem 0 1.25rem;
+    }
+    .title {
+        font-size: 1.1rem;
+        margin: 1.75rem 1rem;
+        text-align: left;
+        width: 10rem;
+    }
+    .sign-in-and-post {
+        margin: 1rem 1.5rem;
+    }
+    .user-login {
+        margin-right: 1rem;
+    }
+    .sign-in-text {
+        display: none;
+    }
+  }

@@ -101,9 +101,9 @@ export const SingleArticle = () => {
             </section>
             <section>
                 <h1 className="article-title-individual-article">{article.title}</h1>
-                <img src={article.article_img_url} alt="Associated article image"/>
+                <img className="article-image-individual-article" src={article.article_img_url} alt="Associated article image"/>
                 <section className="article-info">
-                    <section className="article-info-left">
+                    <section>
                         <p className="posted-by-individual-article">Posted by:</p>
                         <section className="article-author-pic-username">
                             {users.map((user) => {

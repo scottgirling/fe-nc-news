@@ -114,7 +114,7 @@ export const ArticleList = () => {
                             </section>
                         </section>
 
-                        <Box sx={{ minWidth: 120, m: "1rem" }}>
+                        <Box className="mui-sort-articles" sx={{ minWidth: 120, m: "1rem",  }}>
                             <FormControl 
                                 sx={{ width: "10rem", mr: ".5rem" }}>
                                 <InputLabel 

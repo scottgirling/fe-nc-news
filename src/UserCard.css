@@ -9,3 +9,9 @@
     border-radius: 5%;
     margin-top: 2rem;
 }
+
+@media only screen and (max-width: 600px) {
+    .user-card img {
+      height: 10rem;
+    }
+  }
